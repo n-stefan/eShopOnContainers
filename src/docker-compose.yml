@@ -167,6 +167,16 @@ services:
 #      - webshoppingapigw
 #      - webmarketingapigw
 
+  webblazor:
+    image: ${REGISTRY:-eshop}/webblazor:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Web/WebBlazor/Server/Dockerfile
+#    depends_on:
+#      - webshoppingagg
+#      - webshoppingapigw
+#      - webmarketingapigw
+
   webmvc:
     image: ${REGISTRY:-eshop}/webmvc:${PLATFORM:-linux}-${TAG:-latest}
     build:
