@@ -41,9 +41,9 @@ COPY "Tests/Services/Application.FunctionalTests/Application.FunctionalTests.csp
 COPY "Web/WebhookClient/WebhookClient.csproj" "Web/WebhookClient/WebhookClient.csproj"
 COPY "Web/WebMVC/WebMVC.csproj" "Web/WebMVC/WebMVC.csproj"
 COPY "Web/WebSPA/WebSPA.csproj" "Web/WebSPA/WebSPA.csproj"
-COPY "Web/WebBlazor/Server/WebBlazor.Server.csproj", "Web/WebBlazor/Server/WebBlazor.Server.csproj"
-COPY "Web/WebBlazor/Shared/WebBlazor.Shared.csproj", "Web/WebBlazor/Shared/WebBlazor.Shared.csproj"
-COPY "Web/WebBlazor/Client/WebBlazor.Client.csproj", "Web/WebBlazor/Client/WebBlazor.Client.csproj"
+COPY "Web/WebBlazor/Server/WebBlazor.Server.csproj" "Web/WebBlazor/Server/WebBlazor.Server.csproj"
+COPY "Web/WebBlazor/Shared/WebBlazor.Shared.csproj" "Web/WebBlazor/Shared/WebBlazor.Shared.csproj"
+COPY "Web/WebBlazor/Client/WebBlazor.Client.csproj" "Web/WebBlazor/Client/WebBlazor.Client.csproj"
 COPY "Web/WebStatus/WebStatus.csproj" "Web/WebStatus/WebStatus.csproj"
 
 COPY "docker-compose.dcproj" "docker-compose.dcproj"
