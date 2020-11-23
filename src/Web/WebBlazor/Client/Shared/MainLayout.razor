@@ -1,15 +1,44 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="sidebar">
-    <NavMenu />
-</div>
+<header class="esh-app-header">
+    <div class="container">
+        <article class="row">
+            <section class="col-lg-7 col-md-6 col-12">
+                <NavLink class="navbar-brand" href="catalog">
+                    <img src="assets/images/brand.png" />
+                </NavLink>
+            </section>
 
-<div class="main">
-    <div class="top-row px-4">
-        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-    </div>
+            <section class="col-lg-4 col-md-5 col-12">
+                LOGIN
+            </section>
 
-    <div class="content px-4">
-        @Body
+            <section class="col-lg-1 col-12">
+                @*<AuthorizeView>
+                    <Authorized>
+                        Basket
+                    </Authorized>
+                </AuthorizeView>*@
+            </section>
+
+        </article>
     </div>
-</div>
+</header>
+
+@Body
+
+<footer class="esh-app-footer">
+    <div class="container">
+        <article class="row">
+
+            <section class="col-sm-6">
+                <img class="esh-app-footer-brand" src="assets/images/brand_dark.png" />
+            </section>
+
+            <section class="col-sm-6">
+                <img class="esh-app-footer-text hidden" src="assets/images/main_footer_text.png" width="335" height="26" alt="footer text image" />
+            </section>
+
+        </article>
+    </div>
+</footer>

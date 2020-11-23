@@ -1,0 +1,59 @@
+﻿<div class="esh-pager">
+    <div class="container">
+        <article class="esh-pager-wrapper row">
+            <nav>
+                <span class="esh-pager-item esh-pager-item--navigable @(previousDisabled ? "is-disabled" : "")"
+                      id="Previous"
+                      @onclick="OnPreviousClicked"
+                      aria-label="Previous">
+                    Previous
+                </span>
+
+                <span class="esh-pager-item">
+                    Showing @Model?.Items of @Model?.TotalItems products - Page @(Model?.ActualPage + 1) - @Model?.TotalPages
+                </span>
+
+                <span class="esh-pager-item esh-pager-item--navigable @(nextDisabled ? "is-disabled" : "")"
+                      id="Next"
+                      @onclick="OnNextClicked"
+                      aria-label="Next">
+                    Next
+                </span>
+            </nav>
+        </article>
+    </div>
+</div>
+
+@code {
+    private bool nextDisabled = true;
+    private bool previousDisabled = true;
+
+    [Parameter]
+    public PagerInfo Model { get; set; }
+
+    [Parameter]
+    public EventCallback<int> Changed { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (Model != null)
+        {
+            Model.Items = (Model.ItemsPage > Model.TotalItems) ? Model.TotalItems : Model.ItemsPage;
+
+            previousDisabled = (Model.ActualPage == 0);
+            nextDisabled = (Model.ActualPage + 1 >= Model.TotalPages);
+        }
+    }
+
+    private async Task OnPreviousClicked()
+    {
+        //event.preventDefault();
+        await Changed.InvokeAsync(Model.ActualPage - 1);
+    }
+
+    private async Task OnNextClicked()
+    {
+        //event.preventDefault();
+        await Changed.InvokeAsync(Model.ActualPage + 1);
+    }
+}

@@ -1,0 +1,156 @@
+@page "/"
+@page "/catalog"
+@inject ICatalogService service
+
+<section class="esh-catalog-hero">
+    <div class="container">
+        <img class="esh-catalog-title" src="/assets/images/main_banner_text.png" />
+    </div>
+</section>
+
+<section class="esh-catalog-filters">
+    <div class="container">
+        <div class="alert alert-warning esh-catalog-alert" hidden="@(!errorReceived)" role="alert">
+            Error requesting catalog products, please try later on
+        </div>
+        <label class="esh-catalog-label" data-title="brand">
+            <select class="esh-catalog-filter" @onchange="OnBrandFilterChanged"> @*@bind="brandSelected"*@
+                @foreach (var brand in brands)
+                {
+                    <option value="@brand.Id" selected="@brand.Selected">@brand.Brand</option>
+                }
+            </select>
+        </label>
+        <label class="esh-catalog-label" data-title="type">
+            <select class="esh-catalog-filter" @onchange="OnTypeFilterChanged"> @*@bind="typeSelected"*@
+                @foreach (var type in types)
+                {
+                    <option value="@type.Id" selected="@type.Selected">@type.Type</option>
+                }
+            </select>
+        </label>
+        <img class="esh-catalog-send" @onclick="OnFilterApplied" src="/assets/images/arrow-right.svg" />
+    </div>
+</section>
+
+<div class="container">
+    @if (catalog?.Data.Count > 0)
+    {
+        <div>
+            <Pager Model="paginationInfo" Changed="OnPageChanged"></Pager>
+
+            <div class="esh-catalog-items row">
+                @foreach (var item in catalog?.Data)
+                {
+                    <div class="esh-catalog-item col-md-4">
+                        <img class="esh-catalog-thumbnail" src="@item.PictureUri" />
+                        <button class="esh-catalog-button @(!authenticated ? "is-disabled" : "")" @onclick="() => AddToCart(item)">
+                            [ ADD TO CART ]
+                        </button>
+
+                        <div class="esh-catalog-name">
+                            <span>@item.Name</span>
+                        </div>
+                        <div class="esh-catalog-price">
+                            <span>@item.Price</span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <Pager Model="paginationInfo" Changed="OnPageChanged"></Pager>
+        </div>
+    }
+    else if (catalog?.Data.Count == 0)
+    {
+        <div>
+            <span>THERE ARE NO RESULTS THAT MATCH YOUR SEARCH</span>
+        </div>
+    }
+</div>
+
+@code {
+    private bool errorReceived;
+    private List<BrandDTO> brands = new List<BrandDTO>();
+    private int? brandSelected;
+    private List<TypeDTO> types = new List<TypeDTO>();
+    private int? typeSelected;
+    private CatalogDTO catalog;
+    private PagerInfo paginationInfo = new PagerInfo();
+    //TODO
+    private bool authenticated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        var brandData = await service.GetBrands();
+        brands = brandData.ToList();
+        await GetCatalog(10, 0);
+        var typeData = await service.GetTypes();
+        types = typeData.ToList();
+    }
+
+    private async Task GetCatalog(int pageSize, int pageIndex, int? brand = null, int? type = null)
+    {
+        errorReceived = false;
+        try
+        {
+            catalog = await service.GetCatalogItems(pageIndex, pageSize, brand, type);
+            paginationInfo.ActualPage = catalog.PageIndex;
+            paginationInfo.ItemsPage = catalog.PageSize;
+            paginationInfo.TotalItems = catalog.Count;
+            paginationInfo.TotalPages = (int)Math.Ceiling((double)(catalog.Count / catalog.PageSize));
+            paginationInfo.Items = catalog.PageSize;
+        }
+        catch (Exception)
+        {
+            errorReceived = true;
+            throw;
+        }
+    }
+
+    private void OnBrandFilterChanged(ChangeEventArgs e)
+    {
+        var value = e.Value.ToString();
+        if (value == "All")
+            brandSelected = null;
+        else
+            brandSelected = int.Parse(value);
+    }
+
+    private void OnTypeFilterChanged(ChangeEventArgs e)
+    {
+        var value = e.Value.ToString();
+        if (value == "All")
+            typeSelected = null;
+        else
+            typeSelected = int.Parse(value);
+    }
+
+    private async Task OnFilterApplied()
+    {
+        await GetCatalog(paginationInfo.ItemsPage, paginationInfo.ActualPage, brandSelected, typeSelected);
+    }
+
+    private async Task OnPageChanged(int value)
+    {
+        //event.preventDefault();
+        paginationInfo.ActualPage = value;
+        await GetCatalog(paginationInfo.ItemsPage, value);
+    }
+
+    private void AddToCart(CatalogItemDTO item)
+    {
+        //TODO
+        //this.basketService.addItemToBasket(item);
+    }
+}
+
+@*
+@inject IHttpClientFactory clientFactory
+var client = clientFactory.CreateClient("Catalog");
+*@

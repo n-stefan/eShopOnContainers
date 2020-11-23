@@ -363,7 +363,7 @@ services:
       - PurchaseUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5202
       - MarketingUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5203
       - IdentityUrlHC=http://identity-api/hc
-      - UseCustomizationData=True
+      - UseCustomizationData=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
       - SignalrHubUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5202

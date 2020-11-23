@@ -141,11 +141,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile.Bff.Shopping", "Mobi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobile.Shopping.HttpAggregator", "ApiGateways\Mobile.Bff.Shopping\aggregator\Mobile.Shopping.HttpAggregator.csproj", "{B62E859F-825E-4C8B-93EC-5966EACFD026}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBlazor.Server", "Web\WebBlazor\Server\WebBlazor.Server.csproj", "{49979963-70E3-4284-92D8-752767916D83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebBlazor.Server", "Web\WebBlazor\Server\WebBlazor.Server.csproj", "{49979963-70E3-4284-92D8-752767916D83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBlazor.Client", "Web\WebBlazor\Client\WebBlazor.Client.csproj", "{0448767D-FAF0-4B44-B3A9-AA58472D3C6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebBlazor.Client", "Web\WebBlazor\Client\WebBlazor.Client.csproj", "{0448767D-FAF0-4B44-B3A9-AA58472D3C6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBlazor.Shared", "Web\WebBlazor\Shared\WebBlazor.Shared.csproj", "{8CCF229D-FFE5-4F75-8FCA-6EE361F03208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebBlazor.Shared", "Web\WebBlazor\Shared\WebBlazor.Shared.csproj", "{8CCF229D-FFE5-4F75-8FCA-6EE361F03208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

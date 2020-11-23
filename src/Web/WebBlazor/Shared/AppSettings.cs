@@ -1,5 +1,5 @@
 ﻿
-namespace WebBlazor.Server
+namespace WebBlazor.Shared
 {
     public class AppSettings
     {
