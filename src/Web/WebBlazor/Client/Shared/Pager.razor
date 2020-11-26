@@ -38,7 +38,7 @@
     {
         if (Model != null)
         {
-            Model.Items = (Model.ItemsPage > Model.TotalItems) ? Model.TotalItems : Model.ItemsPage;
+            Model.Items = (Model.ItemsPage > Model.Items) ? Model.Items : Model.ItemsPage;
 
             previousDisabled = (Model.ActualPage == 0);
             nextDisabled = (Model.ActualPage + 1 >= Model.TotalPages);
@@ -47,13 +47,11 @@
 
     private async Task OnPreviousClicked()
     {
-        //event.preventDefault();
         await Changed.InvokeAsync(Model.ActualPage - 1);
     }
 
     private async Task OnNextClicked()
     {
-        //event.preventDefault();
         await Changed.InvokeAsync(Model.ActualPage + 1);
     }
 }

@@ -37,7 +37,7 @@
     @if (catalog?.Data.Count > 0)
     {
         <div>
-            <Pager Model="paginationInfo" Changed="OnPageChanged"></Pager>
+            <Pager Model="paginationInfo" Changed="OnPageChanged" />
 
             <div class="esh-catalog-items row">
                 @foreach (var item in catalog?.Data)
@@ -58,7 +58,7 @@
                 }
             </div>
 
-            <Pager Model="paginationInfo" Changed="OnPageChanged"></Pager>
+            <Pager Model="paginationInfo" Changed="OnPageChanged" />
         </div>
     }
     else if (catalog?.Data.Count == 0)
@@ -103,8 +103,8 @@
             paginationInfo.ActualPage = catalog.PageIndex;
             paginationInfo.ItemsPage = catalog.PageSize;
             paginationInfo.TotalItems = catalog.Count;
-            paginationInfo.TotalPages = (int)Math.Ceiling((double)(catalog.Count / catalog.PageSize));
-            paginationInfo.Items = catalog.PageSize;
+            paginationInfo.TotalPages = (int)Math.Ceiling((decimal)catalog.Count / catalog.PageSize);
+            paginationInfo.Items = catalog.Data.Count;
         }
         catch (Exception)
         {
@@ -138,7 +138,6 @@
 
     private async Task OnPageChanged(int value)
     {
-        //event.preventDefault();
         paginationInfo.ActualPage = value;
         await GetCatalog(paginationInfo.ItemsPage, value);
     }
