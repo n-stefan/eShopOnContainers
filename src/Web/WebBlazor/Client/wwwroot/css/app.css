@@ -107,6 +107,10 @@ a:visited {
         transition: color 0.35s;
     }
 
+.navbar-brand.active {
+    padding: 0 0 4px 0;
+}
+
 .esh-app-header {
     margin: 15px;
 }
