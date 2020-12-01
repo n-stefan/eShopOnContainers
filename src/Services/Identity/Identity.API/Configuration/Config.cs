@@ -64,6 +64,29 @@ namespace Microsoft.eShopOnContainers.Services.Identity.API.Configuration
                 },
                 new Client
                 {
+                    ClientId = "blazor",
+                    ClientName = "eShop Blazor OpenId Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RedirectUris =           { $"{clientsUrl["Blazor"]}/authentication/login-callback" },
+                    RequireConsent = false,
+                    PostLogoutRedirectUris = { $"{clientsUrl["Blazor"]}/" },
+                    AllowedCorsOrigins =     { $"{clientsUrl["Blazor"]}" },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "orders",
+                        "basket",
+                        "locations",
+                        "marketing",
+                        "webshoppingagg",
+                        "orders.signalrhub",
+                        "webhooks"
+                    },
+                },
+                new Client
+                {
                     ClientId = "xamarin",
                     ClientName = "eShop Xamarin OpenId Client",
                     AllowedGrantTypes = GrantTypes.Hybrid,                    

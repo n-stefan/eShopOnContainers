@@ -78,11 +78,14 @@
     private int? typeSelected;
     private CatalogDTO catalog;
     private PagerInfo paginationInfo = new PagerInfo();
-    //TODO
     private bool authenticated;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        authenticated = (await authenticationStateTask).User.Identity.IsAuthenticated;
         await LoadData();
     }
 

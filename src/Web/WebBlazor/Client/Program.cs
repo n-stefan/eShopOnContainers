@@ -18,9 +18,23 @@ namespace WebBlazor.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
+            using var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
             var appSettings = await http.GetFromJsonAsync<AppSettings>("home/config");
             builder.Configuration.AddInMemoryCollection(new Dictionary<string, string> { ["PurchaseUrl"] = appSettings.PurchaseUrl });
+
+            builder.Services.AddOidcAuthentication(options =>
+            {
+                options.ProviderOptions.ClientId = "blazor";
+                options.ProviderOptions.Authority = appSettings.IdentityUrl;
+                options.ProviderOptions.PostLogoutRedirectUri = appSettings.CallBackUrl;
+                //options.ProviderOptions.DefaultScopes.Add("orders");
+                //options.ProviderOptions.DefaultScopes.Add("basket");
+                //options.ProviderOptions.DefaultScopes.Add("locations");
+                //options.ProviderOptions.DefaultScopes.Add("marketing");
+                //options.ProviderOptions.DefaultScopes.Add("webshoppingagg");
+                //options.ProviderOptions.DefaultScopes.Add("orders.signalrhub");
+                //options.ProviderOptions.DefaultScopes.Add("webhooks");
+            });
 
             builder.Services.AddHttpClientServices(builder.HostEnvironment.BaseAddress);
 
@@ -33,7 +47,6 @@ namespace WebBlazor.Client
         public static IServiceCollection AddHttpClientServices(this IServiceCollection services, string baseAddress)
         {
             services.AddHttpClient<ICatalogService, CatalogService>();
-
             //services.AddHttpClient("Catalog", c => c.BaseAddress = new Uri(baseAddress));
 
             return services;
