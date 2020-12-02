@@ -23,7 +23,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.Kubernetes" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.Redis" Version="2.2.0-preview3-35458" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="3.1.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0-dev-00834" />
