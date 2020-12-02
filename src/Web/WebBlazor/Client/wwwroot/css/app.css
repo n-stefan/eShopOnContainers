@@ -1,5 +1,6 @@
 ﻿@import url('catalog.css');
 @import url('pager.css');
+@import url('identity.css');
 
 #blazor-error-ui {
     background: lightyellow;
@@ -13,12 +14,12 @@
     z-index: 1000;
 }
 
-#blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
-}
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
 
 @font-face {
     font-family: Montserrat;
@@ -109,6 +110,7 @@ a:visited {
 
 .navbar-brand.active {
     padding: 0 0 4px 0;
+    margin: 0 0 0 20px;
 }
 
 .esh-app-header {
