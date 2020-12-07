@@ -10,7 +10,7 @@ app:                                                    # app global settings
       ordering: ordering-api                            # ingress entry for ordering api
       identity: identity                                # ingress entry for identity api
       mvc: webmvc                                       # ingress entry for web mvc
-      spa: ""                                           # ingress entry for web spa
+      blazor: ""                                        # ingress entry for web blazor
       status: webstatus                                 # ingress entry for web status
       webshoppingapigw: webshoppingapigw                # ingress entry for web shopping Agw
       webmarketingapigw: webmarketingapigw              # ingress entry for web mkg Agw
@@ -31,7 +31,7 @@ app:                                                    # app global settings
       orderingsignalrhub: ordering-signalrhub           # service name for orderingsignalrhub
       identity: identity-api                            # service name for identity api
       mvc: webmvc                                       # service name for web mvc
-      spa: webspa                                       # service name for web spa
+      blazor: webblazor                                 # service name for web blazor
       status: webstatus                                 # service name for web status
       webshoppingapigw: webshoppingapigw                # service name for web shopping Agw
       webmarketingapigw: webmarketingapigw              # service name for web mkg Agw

@@ -38,8 +38,8 @@ env:
       key: all__InstrumentationKey
     - name: MvcClient
       key: mvc_e
-    - name: SpaClient
-      key: spa_e
+    - name: BlazorClient
+      key: blazor_e
     - name: LocationApiClient
       key: locations_e
     - name: MarketingApiClient

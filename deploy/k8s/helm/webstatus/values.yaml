@@ -39,9 +39,9 @@ env:
     - name: HealthChecks-UI__HealthChecks__0__Uri
       key: internalurls__mvc__hc
     - name: HealthChecks-UI__HealthChecks__1__Name
-      key: name__spa__hc
+      key: name__blazor__hc
     - name: HealthChecks-UI__HealthChecks__1__Uri
-      key: internalurls__spa__hc
+      key: internalurls__blazor__hc
     - name: HealthChecks-UI__HealthChecks__2__Name
       key: name__apigwwsagg__hc
     - name: HealthChecks-UI__HealthChecks__2__Uri

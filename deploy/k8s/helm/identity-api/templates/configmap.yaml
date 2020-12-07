@@ -1,7 +1,7 @@
 {{- $name := include "identity-api.fullname" . -}}
 {{- $sqlsrv := include "sql-name" . -}}
 {{- $mvc_url := include "url-of" (list .Values.app.ingress.entries.mvc  .) -}}
-{{- $spa_url := include "url-of" (list .Values.app.ingress.entries.spa .) -}}
+{{- $blazor_url := include "url-of" (list .Values.app.ingress.entries.blazor .) -}}
 {{- $locations_url := include "url-of" (list .Values.app.ingress.entries.locations .) -}}
 {{- $marketing_url := include "url-of" (list .Values.app.ingress.entries.marketing .) -}}
 {{- $basket_url := include "url-of" (list .Values.app.ingress.entries.basket .) -}}
@@ -26,7 +26,7 @@ data:
   identity__keystore: {{ .Values.inf.redis.keystore.constr }}
   all__InstrumentationKey: "{{ .Values.inf.appinsights.key }}"
   mvc_e: http://{{ $mvc_url }}
-  spa_e: http://{{ $spa_url }}
+  blazor_e: http://{{ $blazor_url }}
   locations_e: http://{{ $locations_url }}
   marketing_e: http://{{ $marketing_url }}
   basket_e: http://{{ $basket_url }}
