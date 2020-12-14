@@ -1,11 +1,12 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 <header class="esh-app-header">
     <div class="container">
         <article class="row">
 
             <section class="col-lg-7 col-md-6 col-12">
-                <a class="esh-navbar-brand" href="/">
+                <a class="esh-navbar-brand" href="@NavigationManager.BaseUri">
                     <img src="assets/images/brand.png" />
                 </a>
             </section>

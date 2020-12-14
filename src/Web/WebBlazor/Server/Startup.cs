@@ -122,8 +122,8 @@ namespace WebBlazor.Server
                 endpoints.MapRazorPages();
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapControllers();
-                endpoints.MapFallbackToFile("index.html");
-                //endpoints.MapFallbackToPage("/_Host");
+                //endpoints.MapFallbackToFile("index.html");
+                endpoints.MapFallbackToPage("/_Host");
                 endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
                 {
                     Predicate = r => r.Name.Contains("self")

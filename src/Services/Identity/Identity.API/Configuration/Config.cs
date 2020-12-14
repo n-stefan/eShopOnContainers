@@ -71,7 +71,7 @@ namespace Microsoft.eShopOnContainers.Services.Identity.API.Configuration
                     RedirectUris =           { $"{clientsUrl["Blazor"]}/authentication/login-callback" },
                     RequireConsent = false,
                     PostLogoutRedirectUris = { $"{clientsUrl["Blazor"]}/" },
-                    AllowedCorsOrigins =     { $"{clientsUrl["Blazor"]}" },
+                    AllowedCorsOrigins = { clientsUrl["Blazor"].Contains("localhost") ? clientsUrl["Blazor"][..(clientsUrl["Blazor"].IndexOf("localhost") + 9)] : clientsUrl["Blazor"] },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

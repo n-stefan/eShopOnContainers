@@ -1,6 +1,6 @@
 replicaCount: 1
 clusterName: eshop-aks
-pathBase: /
+pathBase: /webblazor
 
 image:
   repository: eshop/webblazor

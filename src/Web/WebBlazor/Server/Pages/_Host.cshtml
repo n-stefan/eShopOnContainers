@@ -1,7 +1,15 @@
 ﻿@page "/"
 @namespace WebBlazor.Server.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using WebBlazor.Client
+@*@using WebBlazor.Client*@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    var pathBase = Configuration["PATH_BASE"];
+    if (string.IsNullOrEmpty(pathBase)) pathBase = "/";
+    else if (!pathBase.EndsWith("/")) pathBase = $"{pathBase}/";
+}
 
 <!DOCTYPE html>
 <html>
@@ -10,7 +18,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>WebBlazor</title>
-    <base href="/" />
+    <base href="@pathBase" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -18,7 +26,8 @@
 
 <body>
     <app>
-        <component type="typeof(App)" render-mode="Static" />
+        Loading...
+        @*<component type="typeof(App)" render-mode="Static" />*@
     </app>
 
     <div id="blazor-error-ui">
@@ -26,6 +35,7 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+    <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
 
