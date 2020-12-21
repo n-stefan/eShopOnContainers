@@ -4,7 +4,7 @@ using WebBlazor.Client.Services.ModelDTOs;
 
 namespace WebBlazor.Client.Services
 {
-    interface ICatalogService
+    public interface ICatalogService
     {
         Task<CatalogDTO> GetCatalogItems(int page, int take, int? brand, int? type);
 

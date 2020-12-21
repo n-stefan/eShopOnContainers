@@ -1,0 +1,26 @@
+﻿@attribute [Authorize]
+@inject IBasketService service
+
+<a class="esh-basketstatus @(badge < 1 ? "is-disabled" : "")"
+   href="/basket">
+    <div class="esh-basketstatus-image">
+        <img src="assets/images/cart.png" />
+    </div>
+    <div class="esh-basketstatus-badge">
+        @badge
+    </div>
+</a>
+
+@code {
+    private int badge;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userId = (await authenticationStateTask).User.FindFirst(x => x.Type == "sub").Value;
+        var basket = await service.GetBasket(userId);
+        badge = basket.Items.Count;
+    }
+}
