@@ -1,6 +1,7 @@
 @page "/"
 @page "/catalog"
-@inject ICatalogService service
+@inject ICatalogService catalogService
+@inject IBasketService basketService
 
 <section class="esh-catalog-hero">
     <div class="container">
@@ -79,22 +80,26 @@
     private CatalogDTO catalog;
     private PagerInfo paginationInfo = new PagerInfo();
     private bool authenticated;
+    private string userId;
 
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        authenticated = (await authenticationStateTask).User.Identity.IsAuthenticated;
+        var user = (await authenticationStateTask).User;
+        authenticated = user.Identity.IsAuthenticated;
+        if (authenticated)
+            userId = user.GetSub();
         await LoadData();
     }
 
     private async Task LoadData()
     {
-        var brandData = await service.GetBrands();
+        var brandData = await catalogService.GetBrands();
         brands = brandData.ToList();
         await GetCatalog(10, 0);
-        var typeData = await service.GetTypes();
+        var typeData = await catalogService.GetTypes();
         types = typeData.ToList();
     }
 
@@ -103,7 +108,7 @@
         errorReceived = false;
         try
         {
-            catalog = await service.GetCatalogItems(pageIndex, pageSize, brand, type);
+            catalog = await catalogService.GetCatalogItems(pageIndex, pageSize, brand, type);
             paginationInfo.ActualPage = catalog.PageIndex;
             paginationInfo.ItemsPage = catalog.PageSize;
             paginationInfo.TotalItems = catalog.Count;
@@ -146,9 +151,8 @@
         await GetCatalog(paginationInfo.ItemsPage, value);
     }
 
-    private void AddToCart(CatalogItemDTO item)
+    private async Task AddToCart(CatalogItemDTO item)
     {
-        //TODO
-        //this.basketService.addItemToBasket(item);
+        await basketService.AddItemToBasket(userId, item.Id);
     }
 }

@@ -1,5 +1,7 @@
 ﻿@attribute [Authorize]
-@inject IBasketService service
+@inject IBasketService basketService
+@inject EventService eventService
+@implements IDisposable
 
 <a class="esh-basketstatus @(badge < 1 ? "is-disabled" : "")"
    href="/basket">
@@ -19,8 +21,20 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var userId = (await authenticationStateTask).User.FindFirst(x => x.Type == "sub").Value;
-        var basket = await service.GetBasket(userId);
+        var userId = (await authenticationStateTask).User.GetSub();
+        await UpdateBadge(userId);
+        eventService.BasketItemAdded += UpdateBadge;
+    }
+
+    private async Task UpdateBadge(string userId)
+    {
+        var basket = await basketService.GetBasket(userId);
         badge = basket.Items.Count;
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        eventService.BasketItemAdded -= UpdateBadge;
     }
 }

@@ -39,6 +39,8 @@ namespace WebBlazor.Client
 
             builder.Services.AddHttpClientServices();
 
+            builder.Services.AddScoped<EventService>();
+
             await builder.Build().RunAsync();
         }
     }

@@ -15,7 +15,7 @@
         <Authorized>
 
             <section class="esh-identity-section">
-                <div class="esh-identity-name">@context.User.FindFirst(x => x.Type == "preferred_username").Value</div>
+                <div class="esh-identity-name">@context.User.GetPreferredUsername()</div>
                 <img class="esh-identity-image" src="assets/images/arrow-down.png">
             </section>
 

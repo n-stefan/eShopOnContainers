@@ -39,5 +39,11 @@ namespace WebBlazor.Client.Infrastructure
             public static string GetBasket(string baseUri, string basketId) =>
                 $"{baseUri}/{basketId}";
         }
+
+        public static class Purchase
+        {
+            public static string AddItemToBasket(string baseUri) =>
+                $"{baseUri}/basket/items";
+        }
     }
 }
