@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -62,6 +64,44 @@ namespace WebBlazor.Client.Services
             {
                 _eventService.OnBasketItemAdded(userId);
             }
+        }
+
+        public async Task<BasketDTO> SetQuantities(/*ApplicationUser user*/string userId, Dictionary<string, int> quantities)
+        {
+            var uri = API.Purchase.UpdateBasketItem(_purchaseUrl);
+
+            var basketUpdate = new
+            {
+                BasketId = /*user.Id*/userId,
+                Updates = quantities.Select(kvp => new
+                {
+                    BasketItemId = kvp.Key,
+                    NewQty = kvp.Value
+                }).ToArray()
+            };
+
+            var basketContent = new StringContent(JsonConvert.SerializeObject(basketUpdate), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(uri, basketContent);
+
+            response.EnsureSuccessStatusCode();
+
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<BasketDTO>(jsonResponse);
+        }
+
+        public async Task<BasketDTO> UpdateBasket(BasketDTO basket)
+        {
+            var uri = API.Basket.UpdateBasket(_basketByPassUrl);
+
+            var basketContent = new StringContent(JsonConvert.SerializeObject(basket), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(uri, basketContent);
+
+            response.EnsureSuccessStatusCode();
+
+            return basket;
         }
     }
 }

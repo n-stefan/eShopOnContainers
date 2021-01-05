@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using WebBlazor.Client.Infrastructure;
+using WebBlazor.Client.Extensions;
 using WebBlazor.Client.Services;
 using WebBlazor.Shared;
 
@@ -42,21 +42,6 @@ namespace WebBlazor.Client
             builder.Services.AddScoped<EventService>();
 
             await builder.Build().RunAsync();
-        }
-    }
-
-    static class ServiceCollectionExtensions
-    {
-        public static IServiceCollection AddHttpClientServices(this IServiceCollection services)
-        {
-            services.AddScoped<HttpClientAuthorizationMessageHandler>();
-
-            services.AddHttpClient<ICatalogService, CatalogService>();
-
-            services.AddHttpClient<IBasketService, BasketService>()
-                .AddHttpMessageHandler<HttpClientAuthorizationMessageHandler>();
-
-            return services;
         }
     }
 }

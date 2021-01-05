@@ -1,6 +1,6 @@
 ﻿@attribute [Authorize]
-@inject IBasketService basketService
-@inject EventService eventService
+@inject IBasketService BasketService
+@inject EventService EventService
 @implements IDisposable
 
 <a class="esh-basketstatus @(badge < 1 ? "is-disabled" : "")"
@@ -23,18 +23,18 @@
     {
         var userId = (await authenticationStateTask).User.GetSub();
         await UpdateBadge(userId);
-        eventService.BasketItemAdded += UpdateBadge;
+        EventService.BasketItemAdded += UpdateBadge;
     }
 
     private async Task UpdateBadge(string userId)
     {
-        var basket = await basketService.GetBasket(userId);
+        var basket = await BasketService.GetBasket(userId);
         badge = basket.Items.Count;
         StateHasChanged();
     }
 
     public void Dispose()
     {
-        eventService.BasketItemAdded -= UpdateBadge;
+        EventService.BasketItemAdded -= UpdateBadge;
     }
 }

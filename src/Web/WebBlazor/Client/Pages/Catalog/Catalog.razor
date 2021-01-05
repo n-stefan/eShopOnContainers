@@ -1,7 +1,7 @@
 @page "/"
 @page "/catalog"
-@inject ICatalogService catalogService
-@inject IBasketService basketService
+@inject ICatalogService CatalogService
+@inject IBasketService BasketService
 
 <section class="esh-catalog-hero">
     <div class="container">
@@ -96,10 +96,10 @@
 
     private async Task LoadData()
     {
-        var brandData = await catalogService.GetBrands();
+        var brandData = await CatalogService.GetBrands();
         brands = brandData.ToList();
         await GetCatalog(10, 0);
-        var typeData = await catalogService.GetTypes();
+        var typeData = await CatalogService.GetTypes();
         types = typeData.ToList();
     }
 
@@ -108,7 +108,7 @@
         errorReceived = false;
         try
         {
-            catalog = await catalogService.GetCatalogItems(pageIndex, pageSize, brand, type);
+            catalog = await CatalogService.GetCatalogItems(pageIndex, pageSize, brand, type);
             paginationInfo.ActualPage = catalog.PageIndex;
             paginationInfo.ItemsPage = catalog.PageSize;
             paginationInfo.TotalItems = catalog.Count;
@@ -153,6 +153,6 @@
 
     private async Task AddToCart(CatalogItemDTO item)
     {
-        await basketService.AddItemToBasket(userId, item.Id);
+        await BasketService.AddItemToBasket(userId, item.Id);
     }
 }

@@ -2,6 +2,8 @@
 @import url('pager.css');
 @import url('identity.css');
 @import url('basketstatus.css');
+@import url('basket.css');
+@import url('header.css');
 
 #blazor-error-ui {
     background: lightyellow;

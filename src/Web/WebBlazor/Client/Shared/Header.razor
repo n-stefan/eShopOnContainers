@@ -1,0 +1,15 @@
+﻿<div class="esh-header">
+    <div class="container">
+        <a class="esh-header-back" href="@Url">
+            @Content
+        </a>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Url { get; set; }
+
+    [Parameter]
+    public RenderFragment Content { get; set; }
+}

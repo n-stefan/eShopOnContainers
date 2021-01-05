@@ -2,7 +2,7 @@
 
 namespace WebBlazor.Client.Extensions
 {
-    public static class ClaimsPrincipalExtensions
+    static class ClaimsPrincipalExtensions
     {
         // Id
         public static string GetSub(this ClaimsPrincipal claimsPrincipal) =>
