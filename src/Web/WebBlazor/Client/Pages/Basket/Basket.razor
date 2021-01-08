@@ -4,9 +4,7 @@
 @inject NavigationManager Navigation
 
 <div class="esh-basket">
-    <Header Url="/catalog">
-        <Content>Back to catalog</Content>
-    </Header>
+    <Header Model="header" />
 
     <div class="container">
         <div class="alert alert-warning" hidden="@(!errorUpdate)" role="alert">
@@ -80,6 +78,7 @@
     private bool errorUpdate;
     private BasketDTO basket = new BasketDTO();
     private string userId;
+    private List<HeaderInfo> header = new List<HeaderInfo> { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
 
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }

@@ -1,15 +1,13 @@
 ﻿<div class="esh-header">
     <div class="container">
-        <a class="esh-header-back" href="@Url">
-            @Content
-        </a>
+        @foreach (var header in Model)
+        {
+            <a class="esh-header-back mr-1" href="@header.Url">@header.Text</a>
+        }
     </div>
 </div>
 
 @code {
     [Parameter]
-    public string Url { get; set; }
-
-    [Parameter]
-    public RenderFragment Content { get; set; }
+    public IEnumerable<HeaderInfo> Model { get; set; }
 }

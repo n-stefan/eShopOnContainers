@@ -21,7 +21,12 @@ namespace WebBlazor.Client
 
             using var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
             var appSettings = await http.GetFromJsonAsync<AppSettings>("home/config");
-            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string> { ["PurchaseUrl"] = appSettings.PurchaseUrl });
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["PurchaseUrl"] = appSettings.PurchaseUrl,
+                ["MarketingUrl"] = appSettings.MarketingUrl,
+                ["ActivateCampaignDetailFunction"] = appSettings.ActivateCampaignDetailFunction
+            });
 
             builder.Services.AddOidcAuthentication(options =>
             {

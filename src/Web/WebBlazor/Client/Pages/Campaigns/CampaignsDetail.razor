@@ -1,0 +1,48 @@
+﻿@page "/campaigns/{id:int}"
+@attribute [Authorize]
+@inject ICampaignService CampaignService
+
+<section class="esh-campaigns-hero">
+    <div class="container">
+        <img class="esh-campaigns-title" src="assets/images/main_banner_text.png" />
+    </div>
+</section>
+
+<Header Model="headers" />
+
+<div class="container">
+    <div class="esh-campaign_detail">
+        <div class="card esh-campaigns-items">
+            <img class="card-img-top" src="@campaign.PictureUri" alt="@campaign.Name">
+            <div class="card-body">
+                <h4 class="card-title">@campaign.Name</h4>
+                <p class="card-text">@campaign.Description</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">
+                    From @campaign.From.ToString("MMMM dd, yyyy") until @campaign.To.ToString("MMMM dd, yyyy")
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private CampaignItemDTO campaign = new CampaignItemDTO();
+    private List<HeaderInfo> headers = new List<HeaderInfo> {
+        new HeaderInfo { Url = "/catalog", Text = "Back to catalog" },
+        new HeaderInfo { Url = "/campaigns", Text = "Back to campaigns" } };
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetCampaign();
+    }
+
+    private async Task GetCampaign()
+    {
+        campaign = await CampaignService.GetCampaignById(Id);
+    }
+}

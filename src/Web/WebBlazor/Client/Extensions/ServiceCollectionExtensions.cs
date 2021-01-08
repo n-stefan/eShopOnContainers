@@ -15,6 +15,12 @@ namespace WebBlazor.Client.Extensions
             services.AddHttpClient<IBasketService, BasketService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationMessageHandler>();
 
+            services.AddHttpClient<ICampaignService, CampaignService>()
+                .AddHttpMessageHandler<HttpClientAuthorizationMessageHandler>();
+
+            services.AddHttpClient<ILocationService, LocationService>()
+                .AddHttpMessageHandler<HttpClientAuthorizationMessageHandler>();
+
             return services;
         }
     }

@@ -4,6 +4,7 @@
 @import url('basketstatus.css');
 @import url('basket.css');
 @import url('header.css');
+@import url('campaigns.css');
 
 #blazor-error-ui {
     background: lightyellow;

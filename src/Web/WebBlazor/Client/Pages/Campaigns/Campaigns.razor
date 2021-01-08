@@ -1,0 +1,144 @@
+﻿@page "/campaigns"
+@attribute [Authorize]
+@inject ICampaignService CampaignService
+@inject ILocationService LocationService
+@inject IConfiguration Configuration
+@inject NavigationManager Navigation
+
+<section class="esh-campaigns-hero">
+    <div class="container">
+        <img class="esh-campaigns-title" src="assets/images/main_banner_text.png" />
+    </div>
+</section>
+
+<Header Model="header" />
+
+<div class="container">
+    <div class="alert alert-warning esh-campaign-alert" role="alert" hidden="@(!errorReceived)">
+        Error requesting campaigns list, please try later on
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="esh-campaigns-items" style="font-weight: 300">
+                UPDATE USER LOCATION
+            </div>
+            <br />
+            <EditForm Model="@location" OnValidSubmit="@UpdateUserLocation" class="form-inline">
+                <div class="text text-danger w-100">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Lat</span>
+                    </div>
+                    <InputNumber id="latitudeInput" class="form-control mb-2 mr-sm-2 mb-sm-0" @bind-Value="location.Latitude" placeholder="Latitude" />
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Lon</span>
+                    </div>
+                    <InputNumber id="longitudeInput" class="form-control mb-2 mr-sm-2 mb-sm-0" @bind-Value="location.Longitude" placeholder="Longitude" />
+                </div>
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0 col-md-2">
+                    <button type="submit" class="btn esh-campaigns-form-button">Update</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+    <br />
+    @if (campaigns?.Data?.Count > 0)
+    {
+        <div class="card-group esh-campaigns-items row">
+            @foreach (var item in campaigns.Data)
+            {
+                <div class="esh-campaigns-item col-md-4">
+                    <div class="card">
+                        <img class="card-img-top esh-campaigns-thumbnail" src="@item.PictureUri" alt="@item.Name">
+                        <div class="card-body">
+                            <h4 class="card-title esh-campaigns-name">@item.Name</h4>
+                            @if (isCampaignDetailFunctionEnabled)
+                            {
+                                <button class="esh-campaigns-button" @onclick="() => OnNavigateToDetails(item.DetailsUri)">More Details</button>
+                            }
+                            else
+                            {
+                                <button class="esh-campaigns-button" @onclick="() => OnNavigateToDetails(item.Id)">More details</button>
+                            }
+                        </div>
+                        <div class="card-footer esh-campaigns-card-footer-text">
+                            <small class="text-muted">
+                                From @item.From.ToString("MMMM dd, yyyy") until @item.To.ToString("MMMM dd, yyyy")
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <Pager Model="paginationInfo" Changed="OnPageChanged" />
+    }
+    @if (campaigns?.Data?.Count == 0)
+    {
+        <div class="esh-campaigns-items row">
+            THERE ARE NO CAMPAIGNS
+        </div>
+    }
+</div>
+
+@code {
+    private bool errorReceived;
+    private bool isCampaignDetailFunctionEnabled;
+    private CampaignDTO campaigns;
+    private LocationDTO location = new LocationDTO();
+    private PagerInfo paginationInfo = new PagerInfo();
+    private List<HeaderInfo> header = new List<HeaderInfo> { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetCampaigns(9, 0);
+        isCampaignDetailFunctionEnabled = Configuration["ActivateCampaignDetailFunction"] == bool.TrueString;
+    }
+
+    private async Task OnPageChanged(int value)
+    {
+        paginationInfo.ActualPage = value;
+        await GetCampaigns(paginationInfo.ItemsPage, value);
+    }
+
+    private async Task GetCampaigns(int pageSize, int pageIndex)
+    {
+        errorReceived = false;
+        try
+        {
+            campaigns = await CampaignService.GetCampaigns(pageSize, pageIndex);
+            paginationInfo.ActualPage = campaigns.PageIndex;
+            paginationInfo.ItemsPage = campaigns.PageSize;
+            paginationInfo.TotalItems = campaigns.Count;
+            paginationInfo.TotalPages = (int)Math.Ceiling((decimal)campaigns.Count / campaigns.PageSize);
+            paginationInfo.Items = campaigns.Data.Count;
+        }
+        catch (Exception)
+        {
+            errorReceived = true;
+            throw;
+        }
+    }
+
+    private void OnNavigateToDetails(string uri)
+    {
+        if (!string.IsNullOrWhiteSpace(uri))
+            Navigation.NavigateTo(uri);
+    }
+
+    private void OnNavigateToDetails(int id)
+    {
+        if (id > 0)
+            Navigation.NavigateTo($"/campaigns/{id}");
+    }
+
+    private async Task UpdateUserLocation()
+    {
+        await LocationService.CreateOrUpdateUserLocation(location);
+    }
+}

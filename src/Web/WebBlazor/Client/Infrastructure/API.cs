@@ -51,5 +51,20 @@ namespace WebBlazor.Client.Infrastructure
             public static string UpdateBasketItem(string baseUri) =>
                 $"{baseUri}/basket/items";
         }
+
+        public static class Marketing
+        {
+            public static string GetAllCampaigns(string baseUri, int take, int page) =>
+                $"{baseUri}user?pageSize={take}&pageIndex={page}";
+
+            public static string GetCampaignById(string baseUri, int id) =>
+                $"{baseUri}{id}";
+        }
+
+        public static class Locations
+        {
+            public static string CreateOrUpdateUserLocation(string baseUri) =>
+                baseUri;
+        }
     }
 }
