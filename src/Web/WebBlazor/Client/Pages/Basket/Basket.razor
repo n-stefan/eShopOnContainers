@@ -32,8 +32,9 @@
                            class="esh-basket-input @(item.Quantity < 1 ? "border border-danger" : "")"
                            type="number"
                            min="1"
-                           value="@item.Quantity"
-                           @onchange="e => ItemQuantityChanged(item, e)" /> @*@bind="item.Quantity"*@
+                           @bind="item.Quantity" />
+                           @*value="@item.Quantity"
+                           @onchange="e => ItemQuantityChanged(item, e)"*@
                 </section>
                 <section class="esh-basket-item esh-basket-item--middle esh-basket-item--mark col-2">$ @((item.UnitPrice * item.Quantity).ToString("N2"))</section>
             </article>
@@ -96,7 +97,7 @@
 
     private void ItemQuantityChanged(BasketItemDTO item, ChangeEventArgs e)
     {
-        item.Quantity = Convert.ToInt32(e.Value);
+        item.Quantity = int.TryParse(e.Value.ToString(), out var result) ? result : 1;
         //if (item.Quantity < 1)
         //    return;
         //await BasketService.SetQuantities(userId, basket.Items.ToDictionary(x => x.Id, y => y.Quantity));

@@ -4,6 +4,7 @@
 @inject ILocationService LocationService
 @inject IConfiguration Configuration
 @inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime;
 
 <section class="esh-campaigns-hero">
     <div class="container">
@@ -125,10 +126,10 @@
         }
     }
 
-    private void OnNavigateToDetails(string uri)
+    private async Task OnNavigateToDetails(string uri)
     {
         if (!string.IsNullOrWhiteSpace(uri))
-            Navigation.NavigateTo(uri);
+            await JSRuntime.InvokeVoidAsync("openBlankWindow", uri);
     }
 
     private void OnNavigateToDetails(int id)

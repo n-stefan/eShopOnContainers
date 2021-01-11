@@ -8,7 +8,7 @@
     </div>
 </section>
 
-<Header Model="headers" />
+<Header Model="header" />
 
 <div class="container">
     <div class="esh-campaign_detail">
@@ -29,7 +29,7 @@
 
 @code {
     private CampaignItemDTO campaign = new CampaignItemDTO();
-    private List<HeaderInfo> headers = new List<HeaderInfo> {
+    private List<HeaderInfo> header = new List<HeaderInfo> {
         new HeaderInfo { Url = "/catalog", Text = "Back to catalog" },
         new HeaderInfo { Url = "/campaigns", Text = "Back to campaigns" } };
 
