@@ -16,11 +16,11 @@ namespace WebBlazor.Client.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<BasketService> _logger;
-        private readonly EventService _eventService;
+        private readonly IEventService _eventService;
         private readonly string _basketByPassUrl;
         private readonly string _purchaseUrl;
 
-        public BasketService(HttpClient httpClient, IConfiguration configuration, ILogger<BasketService> logger, EventService eventService)
+        public BasketService(HttpClient httpClient, IConfiguration configuration, ILogger<BasketService> logger, IEventService eventService)
         {
             _httpClient = httpClient;
             _logger = logger;
@@ -102,6 +102,30 @@ namespace WebBlazor.Client.Services
             response.EnsureSuccessStatusCode();
 
             return basket;
+        }
+
+        public async Task<OrderDTO> GetOrderDraft(string basketId)
+        {
+            var uri = API.Purchase.GetOrderDraft(_purchaseUrl, basketId);
+
+            var responseString = await _httpClient.GetStringAsync(uri);
+
+            var response = JsonConvert.DeserializeObject<OrderDTO>(responseString);
+
+            return response;
+        }
+
+        public async Task Checkout(BasketCheckoutDTO basket)
+        {
+            var uri = API.Basket.CheckoutBasket(_basketByPassUrl);
+
+            var basketContent = new StringContent(JsonConvert.SerializeObject(basket), Encoding.UTF8, "application/json");
+
+            _logger.LogInformation("Uri checkout {uri}", uri);
+
+            var response = await _httpClient.PostAsync(uri, basketContent);
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }

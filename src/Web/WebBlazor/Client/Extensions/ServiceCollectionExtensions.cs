@@ -9,6 +9,7 @@ namespace WebBlazor.Client.Extensions
         public static IServiceCollection AddHttpClientServices(this IServiceCollection services)
         {
             services.AddScoped<HttpClientAuthorizationMessageHandler>();
+            services.AddScoped<HttpClientRequestIdDelegatingHandler>();
 
             services.AddHttpClient<ICatalogService, CatalogService>();
 
@@ -20,6 +21,10 @@ namespace WebBlazor.Client.Extensions
 
             services.AddHttpClient<ILocationService, LocationService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationMessageHandler>();
+
+            services.AddHttpClient<IOrderingService, OrderingService>()
+                .AddHttpMessageHandler<HttpClientAuthorizationMessageHandler>()
+                .AddHttpMessageHandler<HttpClientRequestIdDelegatingHandler>();
 
             return services;
         }

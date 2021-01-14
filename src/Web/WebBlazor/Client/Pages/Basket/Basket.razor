@@ -36,7 +36,7 @@
                            @*value="@item.Quantity"
                            @onchange="e => ItemQuantityChanged(item, e)"*@
                 </section>
-                <section class="esh-basket-item esh-basket-item--middle esh-basket-item--mark col-2">$ @((item.UnitPrice * item.Quantity).ToString("N2"))</section>
+                <section class="esh-basket-item esh-basket-item--middle esh-basket-item--mark col-2">$ @Math.Round(item.UnitPrice * item.Quantity, 2).ToString("N2")</section>
             </article>
             @*@if (item.Quantity < 1)
             {
@@ -123,6 +123,6 @@
         if (HasItemWithInvalidQuantity)
             return;
         await Update();
-        Navigation.NavigateTo("/order");
+        Navigation.NavigateTo("/ordersnew");
     }
 }

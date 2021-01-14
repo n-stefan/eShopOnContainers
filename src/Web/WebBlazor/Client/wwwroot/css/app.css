@@ -5,6 +5,7 @@
 @import url('basket.css');
 @import url('header.css');
 @import url('campaigns.css');
+@import url('ordersnew.css');
 
 #blazor-error-ui {
     background: lightyellow;

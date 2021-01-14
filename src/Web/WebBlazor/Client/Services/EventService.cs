@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace WebBlazor.Client.Services
 {
-    public class EventService
+    public class EventService : IEventService
     {
         public event Func<string, Task> BasketItemAdded;
 

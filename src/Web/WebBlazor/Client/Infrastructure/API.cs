@@ -41,6 +41,9 @@ namespace WebBlazor.Client.Infrastructure
 
             public static string UpdateBasket(string baseUri) =>
                 baseUri;
+
+            public static string CheckoutBasket(string baseUri) =>
+                $"{baseUri}/checkout";
         }
 
         public static class Purchase
@@ -50,6 +53,9 @@ namespace WebBlazor.Client.Infrastructure
 
             public static string UpdateBasketItem(string baseUri) =>
                 $"{baseUri}/basket/items";
+
+            public static string GetOrderDraft(string baseUri, string basketId) =>
+                $"{baseUri}/order/draft/{basketId}";
         }
 
         public static class Marketing

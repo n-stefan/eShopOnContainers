@@ -44,7 +44,7 @@ namespace WebBlazor.Client
 
             builder.Services.AddHttpClientServices();
 
-            builder.Services.AddScoped<EventService>();
+            builder.Services.AddScoped<IEventService, EventService>();
 
             await builder.Build().RunAsync();
         }

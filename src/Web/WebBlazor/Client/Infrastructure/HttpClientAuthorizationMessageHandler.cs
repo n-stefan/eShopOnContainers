@@ -11,7 +11,7 @@ namespace WebBlazor.Client.Infrastructure
         {
             ConfigureHandler(
                 authorizedUrls: new[] { configuration["PurchaseUrl"], configuration["MarketingUrl"] },
-                scopes: new[] { "basket", "marketing", "locations" });
+                scopes: new[] { "basket", "marketing", "locations", "orders" });
         }
     }
 }

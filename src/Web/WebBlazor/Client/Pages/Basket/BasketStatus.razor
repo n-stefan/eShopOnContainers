@@ -1,6 +1,6 @@
 ﻿@attribute [Authorize]
 @inject IBasketService BasketService
-@inject EventService EventService
+@inject IEventService EventService
 @implements IDisposable
 
 <a class="esh-basketstatus @(badge < 1 ? "is-disabled" : "")"

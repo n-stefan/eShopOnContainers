@@ -1,0 +1,177 @@
+﻿@page "/ordersnew"
+@attribute [Authorize]
+@inject IOrderingService OrderingService
+@inject IBasketService BasketService
+@inject NavigationManager Navigation
+
+<Header Model="header" />
+
+<div class="container">
+    <div class="alert alert-warning esh-orders_new-alert" role="alert" hidden="@(!errorReceived)">
+        Not possible to create a new order, please try later on
+    </div>
+    <EditForm EditContext="@editContext" OnSubmit="@SubmitForm">
+        <DataAnnotationsValidator />
+        <section class="esh-orders_new-section">
+            <h4 class="esh-orders_new-title">Shipping Address</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group @ErrorClass(() => order.Street)">
+                        <label class="esh-orders_new-title">Address</label>
+                        <InputText class="form-control form-input" placeholder="Street" @bind-Value="order.Street" />
+                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.Street)" /></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group @ErrorClass(() => order.City)">
+                        <label class="esh-orders_new-title">City</label>
+                        <InputText class="form-control form-input" placeholder="City" @bind-Value="order.City" />
+                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.City)" /></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group @ErrorClass(() => order.State)">
+                        <label class="esh-orders_new-title">State</label>
+                        <InputText class="form-control form-input" placeholder="State" @bind-Value="order.State" />
+                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.State)" /></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group @ErrorClass(() => order.Country)">
+                        <label class="esh-orders_new-title">Country</label>
+                        <InputText class="form-control form-input" placeholder="Country" @bind-Value="order.Country" />
+                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.Country)" /></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="esh-orders_new-section">
+            <h4 class="esh-orders_new-title">Payment method</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group @ErrorClass(() => order.CardNumber)">
+                        <label class="esh-orders_new-title">Card number</label>
+                        <InputText class="form-control form-input" placeholder="000000000000000" @bind-Value="order.CardNumber" />
+                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.CardNumber)" /></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group @ErrorClass(() => order.CardHolderName)">
+                        <label class="esh-orders_new-title">Cardholder name</label>
+                        <InputText class="form-control form-input" placeholder="Card holder" @bind-Value="order.CardHolderName" />
+                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.CardHolderName)" /></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group @ErrorClass(() => order.CardExpirationShort)">
+                        <label class="esh-orders_new-title">Expiration date</label>
+                        <InputText class="form-control form-input form-input-medium" placeholder="MM/YY" @bind-Value="order.CardExpirationShort" />
+                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.CardExpirationShort)" /></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group @ErrorClass(() => order.CardSecurityNumber)">
+                        <label class="esh-orders_new-title">Security code</label>
+                        <InputText class="form-control form-input form-input-small" placeholder="000" @bind-Value="order.CardSecurityNumber" />
+                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.CardSecurityNumber)" /></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="esh-orders_new-section">
+            <article class="esh-orders_new-titles row">
+                <section class="esh-orders_new-title col-12">Order details</section>
+            </article>
+
+            @foreach (var item in order.OrderItems)
+            {
+                <article class="esh-orders_new-items esh-orders_new-items--border row">
+                    <section class="esh-orders_new-item col-md-4 hidden-md-down">
+                        <img class="esh-orders_new-image" src="@item.PictureUrl">
+                    </section>
+                    <section class="esh-orders_new-item esh-orders_new-item--middle col-4">@item.ProductName</section>
+                    <section class="esh-orders_new-item esh-orders_new-item--middle col-1">$ @item.UnitPrice.ToString("N2")</section>
+                    <section class="esh-orders_new-item esh-orders_new-item--middle col-1">@item.Units</section>
+                    <section class="esh-orders_new-item esh-orders_new-item--middle col-2">$ @Math.Round(item.Units * item.UnitPrice, 2).ToString("N2")</section>
+                </article>
+            }
+        </section>
+
+        <section class="esh-orders_new-section esh-orders_new-section--right">
+            <article class="esh-orders_new-titles row">
+                <section class="esh-orders_new-title col-9"></section>
+                <section class="esh-orders_new-title col-2">Total</section>
+            </article>
+
+            <article class="esh-orders_new-items row">
+                <section class="esh-orders_new-item col-9"></section>
+                <section class="esh-orders_new-item esh-orders_new-item--mark col-2">$ @order.Total.ToString("N2")</section>
+            </article>
+        </section>
+        <section class="esh-orders_new-section">
+            <div class="form-group row">
+                <div class="col-md-9">
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="[ Place Order ]" class="btn esh-orders_new-placeOrder" disabled="@CantPlaceOrder" />
+                </div>
+            </div>
+        </section>
+    </EditForm>
+</div>
+
+@code {
+    private bool errorReceived;
+    private bool isOrderProcessing;
+    private List<HeaderInfo> header = new List<HeaderInfo> { new HeaderInfo { Url = "/basket", Text = "Back to cart" } };
+    private OrderDTO order;
+    private EditContext editContext;
+
+    private bool CantPlaceOrder
+    {
+        get => !editContext.Validate() || isOrderProcessing;
+    }
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    public OrdersNew()
+    {
+        order = new OrderDTO();
+        editContext = new EditContext(order);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await authenticationStateTask).User;
+        var orderDraft = await BasketService.GetOrderDraft(user.GetSub());
+        order = OrderingService.MapUserInfoIntoOrder(user, orderDraft);
+        order.CardExpirationShortFormat();
+        editContext = new EditContext(order);
+    }
+
+    private async Task SubmitForm()
+    {
+        if (!editContext.Validate())
+            return;
+        var basket = OrderingService.MapOrderToBasket(order);
+        try
+        {
+            await BasketService.Checkout(basket);
+            errorReceived = false;
+            isOrderProcessing = true;
+            Navigation.NavigateTo("/orders");
+        }
+        catch (Exception)
+        {
+            errorReceived = true;
+            isOrderProcessing = false;
+            throw;
+        }
+    }
+
+    private string ErrorClass(Expression<Func<object>> field)
+    {
+        return editContext.GetValidationMessages(field).Any() ? "has-error" : string.Empty;
+    }
+}

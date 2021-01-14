@@ -13,5 +13,9 @@ namespace WebBlazor.Client.Services
         Task<BasketDTO> SetQuantities(/*ApplicationUser user*/string userId, Dictionary<string, int> quantities);
 
         Task<BasketDTO> UpdateBasket(BasketDTO basket);
+
+        Task<OrderDTO> GetOrderDraft(string basketId);
+
+        Task Checkout(BasketCheckoutDTO basket);
     }
 }
