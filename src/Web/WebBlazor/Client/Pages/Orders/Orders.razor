@@ -1,0 +1,79 @@
+﻿@page "/orders"
+@attribute [Authorize]
+@inject IOrderingService OrderingService
+
+<div class="esh-orders">
+    <Header Model="header" />
+
+    <div class="container">
+        <div class="alert alert-warning esh-orders-alert" role="alert" hidden="@(!errorReceived)">
+            Error requesting order list, please try later on
+        </div>
+        <article class="esh-orders-titles row">
+            <section class="esh-orders-title col-2">Order number</section>
+            <section class="esh-orders-title col-4">Date</section>
+            <section class="esh-orders-title col-2">Total</section>
+            <section class="esh-orders-title col-2">Status</section>
+            <section class="esh-orders-title col-2"></section>
+        </article>
+
+        @foreach (var order in orders)
+        {
+            <article class="esh-orders-items row">
+                <section class="esh-orders-item col-2">@order.OrderNumber</section>
+                <section class="esh-orders-item col-4">@order.Date.ToString("MM/dd/yyyy HH:mm:ss")</section>
+                <section class="esh-orders-item col-2">$ @order.Total.ToString("N2")</section>
+                <section class="esh-orders-item col-2">@order.Status</section>
+                <section class="esh-orders-item col-1">
+                    <a class="esh-orders-link" href="/orders/@order.OrderNumber">Detail</a>
+                </section>
+                <section class="esh-orders-item col-1">
+                    @*@if (order.Status.ToLower() == "submitted")
+                    {
+                        <a class="esh-orders-link" @onclick="() => CancelOrder(order.OrderNumber)">Cancel</a>
+                    }*@
+                </section>
+
+            </article>
+        }
+    </div>
+</div>
+
+@code {
+    private bool errorReceived;
+    private List<OrderDTO> orders = new List<OrderDTO>();
+    private List<HeaderInfo> header = new List<HeaderInfo> {
+        new HeaderInfo { Url = "/catalog", Text = "Back to catalog" },
+        new HeaderInfo { Text = "/" },
+        new HeaderInfo { Url = "/ordermanagement", Text = "Orders Management" } };
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userId = (await authenticationStateTask).User.GetSub();
+        await GetOrders(userId);
+        //this.signalrService.msgReceived$
+        //    .subscribe(x => this.getOrders());
+    }
+
+    private async Task GetOrders(string userId)
+    {
+        try
+        {
+            orders = await OrderingService.GetMyOrders(userId);
+            errorReceived = false;
+        }
+        catch (Exception)
+        {
+            errorReceived = true;
+            throw;
+        }
+    }
+
+    private async Task CancelOrder(string orderNumber)
+    {
+        await OrderingService.CancelOrder(orderNumber);
+    }
+}

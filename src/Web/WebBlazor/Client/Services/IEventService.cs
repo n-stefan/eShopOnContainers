@@ -7,6 +7,10 @@ namespace WebBlazor.Client.Services
     {
         event Func<string, Task> BasketItemAdded;
 
+        event Action OrderCreated;
+
         void OnBasketItemAdded(string userId);
+
+        void OnOrderCreated();
     }
 }

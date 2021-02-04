@@ -72,5 +72,14 @@ namespace WebBlazor.Client.Infrastructure
             public static string CreateOrUpdateUserLocation(string baseUri) =>
                 baseUri;
         }
+
+        public static class Order
+        {
+            public static string GetAllMyOrders(string baseUri) =>
+                baseUri;
+
+            public static string CancelOrder(string baseUri) =>
+                $"{baseUri}/cancel";
+        }
     }
 }

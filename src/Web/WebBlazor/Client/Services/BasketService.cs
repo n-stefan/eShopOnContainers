@@ -126,6 +126,11 @@ namespace WebBlazor.Client.Services
             var response = await _httpClient.PostAsync(uri, basketContent);
 
             response.EnsureSuccessStatusCode();
+
+            if (response.StatusCode == HttpStatusCode.Accepted)
+            {
+                _eventService.OnOrderCreated();
+            }
         }
     }
 }

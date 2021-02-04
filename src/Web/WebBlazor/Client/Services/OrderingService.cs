@@ -1,8 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 using WebBlazor.Client.Extensions;
+using WebBlazor.Client.Infrastructure;
 using WebBlazor.Client.Services.ModelDTOs;
 
 namespace WebBlazor.Client.Services
@@ -55,6 +61,35 @@ namespace WebBlazor.Client.Services
                 Buyer = order.Buyer,
                 RequestId = order.RequestId
             };
+        }
+
+        public async Task<List<OrderDTO>> GetMyOrders(/*ApplicationUser*/string userId)
+        {
+            var uri = API.Order.GetAllMyOrders(_remoteServiceBaseUrl);
+
+            var responseString = await _httpClient.GetStringAsync(uri);
+
+            var response = JsonConvert.DeserializeObject<List<OrderDTO>>(responseString);
+
+            return response;
+        }
+
+        public async Task CancelOrder(string orderId)
+        {
+            var uri = API.Order.CancelOrder(_remoteServiceBaseUrl);
+
+            var order = new { OrderNumber = int.Parse(orderId) };
+
+            var orderContent = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(uri, orderContent);
+
+            if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Error cancelling order, try later.");
+            }
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }
