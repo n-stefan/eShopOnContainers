@@ -6,11 +6,11 @@ namespace WebBlazor.Client.Services
 {
     public interface IBasketService
     {
-        Task<BasketDTO> GetBasket(/*ApplicationUser user*/string userId);
+        Task<BasketDTO> GetBasket(string userId);
 
-        Task AddItemToBasket(/*ApplicationUser user*/string userId, int productId);
+        Task AddItemToBasket(string userId, int productId);
 
-        Task<BasketDTO> SetQuantities(/*ApplicationUser user*/string userId, Dictionary<string, int> quantities);
+        Task<BasketDTO> SetQuantities(string userId, Dictionary<string, int> quantities);
 
         Task<BasketDTO> UpdateBasket(BasketDTO basket);
 

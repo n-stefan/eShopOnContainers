@@ -30,9 +30,9 @@ namespace WebBlazor.Client.Services
             _purchaseUrl = $"{configuration["PurchaseUrl"]}/api/v1";
         }
 
-        public async Task<BasketDTO> GetBasket(/*ApplicationUser user*/string userId)
+        public async Task<BasketDTO> GetBasket(string userId)
         {
-            var uri = API.Basket.GetBasket(_basketByPassUrl, /*user.Id*/userId);
+            var uri = API.Basket.GetBasket(_basketByPassUrl, userId);
             _logger.LogDebug("[GetBasket] -> Calling {Uri} to get the basket", uri);
 
             var response = await _httpClient.GetAsync(uri);
@@ -41,18 +41,18 @@ namespace WebBlazor.Client.Services
             var responseString = await response.Content.ReadAsStringAsync();
             
             return string.IsNullOrEmpty(responseString) ?
-                new BasketDTO { BuyerId = /*user.Id*/userId } :
+                new BasketDTO { BuyerId = userId } :
                 JsonConvert.DeserializeObject<BasketDTO>(responseString);
         }
 
-        public async Task AddItemToBasket(/*ApplicationUser user*/string userId, int productId)
+        public async Task AddItemToBasket(string userId, int productId)
         {
             var uri = API.Purchase.AddItemToBasket(_purchaseUrl);
 
             var newItem = new
             {
                 CatalogItemId = productId,
-                BasketId = /*user.Id*/userId,
+                BasketId = userId,
                 Quantity = 1
             };
 
@@ -66,13 +66,13 @@ namespace WebBlazor.Client.Services
             }
         }
 
-        public async Task<BasketDTO> SetQuantities(/*ApplicationUser user*/string userId, Dictionary<string, int> quantities)
+        public async Task<BasketDTO> SetQuantities(string userId, Dictionary<string, int> quantities)
         {
             var uri = API.Purchase.UpdateBasketItem(_purchaseUrl);
 
             var basketUpdate = new
             {
-                BasketId = /*user.Id*/userId,
+                BasketId = userId,
                 Updates = quantities.Select(kvp => new
                 {
                     BasketItemId = kvp.Key,

@@ -24,7 +24,7 @@ namespace WebBlazor.Client.Services
             _remoteServiceBaseUrl = $"{configuration["PurchaseUrl"]}/o/api/v1/orders";
         }
 
-        public OrderDTO MapUserInfoIntoOrder(/*ApplicationUser*/ClaimsPrincipal user, OrderDTO order)
+        public OrderDTO MapUserInfoIntoOrder(ClaimsPrincipal user, OrderDTO order)
         {
             var expirationSplit = user.GetExpiration().Split('/');
 
@@ -63,7 +63,7 @@ namespace WebBlazor.Client.Services
             };
         }
 
-        public async Task<List<OrderDTO>> GetMyOrders(/*ApplicationUser*/string userId)
+        public async Task<List<OrderDTO>> GetMyOrders(string userId)
         {
             var uri = API.Order.GetAllMyOrders(_remoteServiceBaseUrl);
 

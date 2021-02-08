@@ -7,11 +7,11 @@ namespace WebBlazor.Client.Services
 {
     interface IOrderingService
     {
-        OrderDTO MapUserInfoIntoOrder(/*ApplicationUser*/ClaimsPrincipal user, OrderDTO order);
+        OrderDTO MapUserInfoIntoOrder(ClaimsPrincipal user, OrderDTO order);
 
         BasketCheckoutDTO MapOrderToBasket(OrderDTO order);
 
-        Task<List<OrderDTO>> GetMyOrders(/*ApplicationUser*/string userId);
+        Task<List<OrderDTO>> GetMyOrders(string userId);
 
         Task CancelOrder(string orderId);
     }
