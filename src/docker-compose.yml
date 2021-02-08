@@ -145,10 +145,9 @@ services:
     build:
       context: .
       dockerfile: Web/WebBlazor/Server/Dockerfile
-#    depends_on:
-#      - webshoppingagg
-#      - webshoppingapigw
-#      - webmarketingapigw
+    depends_on:
+      - webshoppingagg
+      - webshoppingapigw
 
   webmvc:
     image: ${REGISTRY:-eshop}/webmvc:${PLATFORM:-linux}-${TAG:-latest}

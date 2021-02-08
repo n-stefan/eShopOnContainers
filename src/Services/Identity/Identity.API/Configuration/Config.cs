@@ -74,8 +74,6 @@ namespace Microsoft.eShopOnContainers.Services.Identity.API.Configuration
                         IdentityServerConstants.StandardScopes.Profile,
                         "orders",
                         "basket",
-                        "locations",
-                        "marketing",
                         "webshoppingagg",
                         "orders.signalrhub",
                         "webhooks"

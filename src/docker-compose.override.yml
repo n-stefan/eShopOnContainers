@@ -294,7 +294,6 @@ services:
       - IdentityUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
       - CallBackUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5106/
       - PurchaseUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5202
-      - MarketingUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5203
       - IdentityUrlHC=http://identity-api/hc
       - UseCustomizationData=False
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}

@@ -36,8 +36,6 @@ namespace WebBlazor.Client
                 options.ProviderOptions.ResponseType = "id_token token";
                 options.ProviderOptions.DefaultScopes.Add("orders");
                 options.ProviderOptions.DefaultScopes.Add("basket");
-                options.ProviderOptions.DefaultScopes.Add("locations");
-                options.ProviderOptions.DefaultScopes.Add("marketing");
                 options.ProviderOptions.DefaultScopes.Add("webshoppingagg");
                 options.ProviderOptions.DefaultScopes.Add("orders.signalrhub");
             });
