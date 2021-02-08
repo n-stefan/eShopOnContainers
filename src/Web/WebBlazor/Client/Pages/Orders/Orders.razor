@@ -4,7 +4,6 @@
 
 <div class="esh-orders">
     <Header Model="header" />
-
     <div class="container">
         <div class="alert alert-warning esh-orders-alert" role="alert" hidden="@(!errorReceived)">
             Error requesting order list, please try later on
@@ -16,7 +15,6 @@
             <section class="esh-orders-title col-2">Status</section>
             <section class="esh-orders-title col-2"></section>
         </article>
-
         @foreach (var order in orders)
         {
             <article class="esh-orders-items row">
@@ -28,12 +26,11 @@
                     <a class="esh-orders-link" href="/orders/@order.OrderNumber">Detail</a>
                 </section>
                 <section class="esh-orders-item col-1">
-                    @*@if (order.Status.ToLower() == "submitted")
+                    @if (order.Status.ToLower() == "submitted")
                     {
                         <a class="esh-orders-link" @onclick="() => CancelOrder(order.OrderNumber)">Cancel</a>
-                    }*@
+                    }
                 </section>
-
             </article>
         }
     </div>
