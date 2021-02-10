@@ -91,5 +91,16 @@ namespace WebBlazor.Client.Services
 
             response.EnsureSuccessStatusCode();
         }
+
+        public async Task<OrderDTO> GetOrder(string userId, string orderId)
+        {
+            var uri = API.Order.GetOrder(_remoteServiceBaseUrl, orderId);
+            
+            var responseString = await _httpClient.GetStringAsync(uri);
+
+            var response = JsonConvert.DeserializeObject<OrderDTO>(responseString);
+
+            return response;
+        }
     }
 }
