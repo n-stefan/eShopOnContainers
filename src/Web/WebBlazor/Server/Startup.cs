@@ -53,7 +53,7 @@ namespace WebBlazor.Server
             }
 
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
-            services.AddControllersWithViews()
+            services.AddControllers()
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
@@ -102,7 +102,6 @@ namespace WebBlazor.Server
             //app.Use(async (context, next) =>
             //{
             //    await next();
-
             //    // If there's no available file and the request doesn't contain an extension, we're probably trying to access a page.
             //    // Rewrite request to use app root
             //    if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value) && !context.Request.Path.Value.StartsWith("/api"))
