@@ -3,7 +3,7 @@ using WebBlazor.Client.Services.ModelDTOs;
 
 namespace WebBlazor.Client.Services
 {
-    interface ICampaignService
+    public interface ICampaignService
     {
         Task<CampaignDTO> GetCampaigns(int pageSize, int pageIndex);
 

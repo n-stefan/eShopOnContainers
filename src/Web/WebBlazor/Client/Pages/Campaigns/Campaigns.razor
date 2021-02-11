@@ -1,10 +1,4 @@
 ﻿@page "/campaigns"
-@attribute [Authorize]
-@inject ICampaignService CampaignService
-@inject ILocationService LocationService
-@inject IConfiguration Configuration
-@inject NavigationManager Navigation
-@inject IJSRuntime JSRuntime
 
 <section class="esh-campaigns-hero">
     <div class="container">
@@ -86,60 +80,3 @@
         </div>
     }
 </div>
-
-@code {
-    private bool errorReceived;
-    private bool isCampaignDetailFunctionEnabled;
-    private CampaignDTO campaigns;
-    private LocationDTO location = new LocationDTO();
-    private PagerInfo paginationInfo = new PagerInfo();
-    private List<HeaderInfo> header = new List<HeaderInfo> { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
-
-    protected override async Task OnInitializedAsync()
-    {
-        await GetCampaigns(9, 0);
-        isCampaignDetailFunctionEnabled = Configuration["ActivateCampaignDetailFunction"] == bool.TrueString;
-    }
-
-    private async Task OnPageChanged(int value)
-    {
-        paginationInfo.ActualPage = value;
-        await GetCampaigns(paginationInfo.ItemsPage, value);
-    }
-
-    private async Task GetCampaigns(int pageSize, int pageIndex)
-    {
-        errorReceived = false;
-        try
-        {
-            campaigns = await CampaignService.GetCampaigns(pageSize, pageIndex);
-            paginationInfo.ActualPage = campaigns.PageIndex;
-            paginationInfo.ItemsPage = campaigns.PageSize;
-            paginationInfo.TotalItems = campaigns.Count;
-            paginationInfo.TotalPages = (int)Math.Ceiling((decimal)campaigns.Count / campaigns.PageSize);
-            paginationInfo.Items = campaigns.Data.Count;
-        }
-        catch (Exception)
-        {
-            errorReceived = true;
-            throw;
-        }
-    }
-
-    private async Task OnNavigateToDetails(string uri)
-    {
-        if (!string.IsNullOrWhiteSpace(uri))
-            await JSRuntime.InvokeVoidAsync("openBlankWindow", uri);
-    }
-
-    private void OnNavigateToDetails(int id)
-    {
-        if (id > 0)
-            Navigation.NavigateTo($"/campaigns/{id}");
-    }
-
-    private async Task UpdateUserLocation()
-    {
-        await LocationService.CreateOrUpdateUserLocation(location);
-    }
-}

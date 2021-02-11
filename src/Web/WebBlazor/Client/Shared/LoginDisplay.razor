@@ -1,7 +1,4 @@
-﻿@inject NavigationManager Navigation
-@inject SignOutSessionStateManager SignOutManager
-
-<div class="esh-identity">
+﻿<div class="esh-identity">
     <AuthorizeView>
         <NotAuthorized>
 
@@ -37,11 +34,3 @@
         </Authorized>
     </AuthorizeView>
 </div>
-
-@code {
-    private async Task BeginSignOut(MouseEventArgs args)
-    {
-        await SignOutManager.SetSignOutState();
-        Navigation.NavigateTo("authentication/logout");
-    }
-}

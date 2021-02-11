@@ -3,7 +3,7 @@ using WebBlazor.Client.Services.ModelDTOs;
 
 namespace WebBlazor.Client.Services
 {
-    interface ILocationService
+    public interface ILocationService
     {
         Task CreateOrUpdateUserLocation(LocationDTO location);
     }

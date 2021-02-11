@@ -5,7 +5,7 @@ using WebBlazor.Client.Services.ModelDTOs;
 
 namespace WebBlazor.Client.Services
 {
-    interface IOrderingService
+    public interface IOrderingService
     {
         OrderDTO MapUserInfoIntoOrder(ClaimsPrincipal user, OrderDTO order);
 

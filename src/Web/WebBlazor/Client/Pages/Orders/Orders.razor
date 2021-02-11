@@ -1,6 +1,4 @@
 ﻿@page "/orders"
-@attribute [Authorize]
-@inject IOrderingService OrderingService
 
 <div class="esh-orders">
     <Header Model="header" />
@@ -35,42 +33,3 @@
         }
     </div>
 </div>
-
-@code {
-    private bool errorReceived;
-    private List<OrderDTO> orders = new List<OrderDTO>();
-    private List<HeaderInfo> header = new List<HeaderInfo> {
-        new HeaderInfo { Url = "/catalog", Text = "Back to catalog" },
-        new HeaderInfo { Text = "/" },
-        new HeaderInfo { Url = "/ordermanagement", Text = "Orders Management" } };
-
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationStateTask { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var userId = (await authenticationStateTask).User.GetSub();
-        await GetOrders(userId);
-        //this.signalrService.msgReceived$
-        //    .subscribe(x => this.getOrders());
-    }
-
-    private async Task GetOrders(string userId)
-    {
-        try
-        {
-            orders = await OrderingService.GetMyOrders(userId);
-            errorReceived = false;
-        }
-        catch (Exception)
-        {
-            errorReceived = true;
-            throw;
-        }
-    }
-
-    private async Task CancelOrder(string orderNumber)
-    {
-        await OrderingService.CancelOrder(orderNumber);
-    }
-}

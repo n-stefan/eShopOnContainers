@@ -1,8 +1,4 @@
 ﻿@page "/ordersnew"
-@attribute [Authorize]
-@inject IOrderingService OrderingService
-@inject IBasketService BasketService
-@inject NavigationManager Navigation
 
 <Header Model="header" />
 
@@ -116,61 +112,3 @@
         </section>
     </EditForm>
 </div>
-
-@code {
-    private bool errorReceived;
-    private bool isOrderProcessing;
-    private List<HeaderInfo> header = new List<HeaderInfo> { new HeaderInfo { Url = "/basket", Text = "Back to cart" } };
-    private OrderDTO order;
-    private EditContext editContext;
-
-    private bool CantPlaceOrder
-    {
-        get => !editContext.Validate() || isOrderProcessing;
-    }
-
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationStateTask { get; set; }
-
-    public OrdersNew()
-    {
-        order = new OrderDTO();
-        editContext = new EditContext(order);
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var user = (await authenticationStateTask).User;
-        var orderDraft = await BasketService.GetOrderDraft(user.GetSub());
-        order = OrderingService.MapUserInfoIntoOrder(user, orderDraft);
-        order.CardExpirationShortFormat();
-        order.RequestId = Guid.NewGuid();
-        editContext = new EditContext(order);
-    }
-
-    private async Task SubmitForm()
-    {
-        if (!editContext.Validate())
-            return;
-        var basket = OrderingService.MapOrderToBasket(order);
-        try
-        {
-            await BasketService.Checkout(basket);
-            errorReceived = false;
-            isOrderProcessing = true;
-            await Task.Delay(1000);
-            Navigation.NavigateTo("/orders");
-        }
-        catch (Exception)
-        {
-            errorReceived = true;
-            isOrderProcessing = false;
-            throw;
-        }
-    }
-
-    private string ErrorClass(Expression<Func<object>> field)
-    {
-        return editContext.GetValidationMessages(field).Any() ? "border border-danger" : string.Empty;
-    }
-}

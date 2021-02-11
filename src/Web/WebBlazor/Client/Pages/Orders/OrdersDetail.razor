@@ -1,6 +1,4 @@
 ﻿@page "/orders/{id:int}"
-@attribute [Authorize]
-@inject IOrderingService OrderingService
 
 <div class="esh-orders_detail">
     <Header Model="header" />
@@ -82,25 +80,3 @@
         </section>
     </div>
 </div>
-
-@code {
-    private OrderDTO order = new OrderDTO();
-    private List<HeaderInfo> header = new List<HeaderInfo> { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
-
-    [Parameter]
-    public int Id { get; set; }
-
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationStateTask { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var userId = (await authenticationStateTask).User.GetSub();
-        await GetOrder(userId);
-    }
-
-    private async Task GetOrder(string userId)
-    {
-        order = await OrderingService.GetOrder(userId, Id.ToString());
-    }
-}
