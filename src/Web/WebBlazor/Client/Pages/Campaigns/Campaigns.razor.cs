@@ -17,25 +17,29 @@ namespace WebBlazor.Client.Pages.Campaigns
         private bool errorReceived;
         private bool isCampaignDetailFunctionEnabled;
         private CampaignDTO campaigns;
-        private LocationDTO location = new LocationDTO();
-        private PagerInfo paginationInfo = new PagerInfo();
-        private List<HeaderInfo> header = new List<HeaderInfo> { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
+        private LocationDTO location = new();
+        private PagerInfo paginationInfo = new();
+        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
         
         [Inject]
-        private ICampaignService campaignService { get; set; }
+        private ICampaignService CampaignService { get; set; }
+
         [Inject]
-        private ILocationService locationService { get; set; }
+        private ILocationService LocationService { get; set; }
+
         [Inject]
-        private IConfiguration configuration { get; set; }
+        private IConfiguration Configuration { get; set; }
+
         [Inject]
-        private NavigationManager navigation { get; set; }
+        private NavigationManager Navigation { get; set; }
+
         [Inject]
-        private IJSRuntime jsRuntime { get; set; }
+        private IJSRuntime JsRuntime { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             await GetCampaigns(9, 0);
-            isCampaignDetailFunctionEnabled = configuration["ActivateCampaignDetailFunction"] == bool.TrueString;
+            isCampaignDetailFunctionEnabled = Configuration["ActivateCampaignDetailFunction"] == bool.TrueString;
         }
 
         private async Task OnPageChanged(int value)
@@ -49,7 +53,7 @@ namespace WebBlazor.Client.Pages.Campaigns
             errorReceived = false;
             try
             {
-                campaigns = await campaignService.GetCampaigns(pageSize, pageIndex);
+                campaigns = await CampaignService.GetCampaigns(pageSize, pageIndex);
                 paginationInfo.ActualPage = campaigns.PageIndex;
                 paginationInfo.ItemsPage = campaigns.PageSize;
                 paginationInfo.TotalItems = campaigns.Count;
@@ -66,18 +70,18 @@ namespace WebBlazor.Client.Pages.Campaigns
         private async Task OnNavigateToDetails(string uri)
         {
             if (!string.IsNullOrWhiteSpace(uri))
-                await jsRuntime.InvokeVoidAsync("openBlankWindow", uri);
+                await JsRuntime.InvokeVoidAsync("openBlankWindow", uri);
         }
 
         private void OnNavigateToDetails(int id)
         {
             if (id > 0)
-                navigation.NavigateTo($"/campaigns/{id}");
+                Navigation.NavigateTo($"/campaigns/{id}");
         }
 
         private async Task UpdateUserLocation()
         {
-            await locationService.CreateOrUpdateUserLocation(location);
+            await LocationService.CreateOrUpdateUserLocation(location);
         }
     }
 }

@@ -6,11 +6,11 @@ namespace WebBlazor.Client.Shared
     public partial class RedirectToLogin : ComponentBase
     {
         [Inject]
-        private NavigationManager navigation { get; set; }
+        private NavigationManager Navigation { get; set; }
 
         protected override void OnInitialized()
         {
-            navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(navigation.Uri)}");
+            Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
         }
     }
 }

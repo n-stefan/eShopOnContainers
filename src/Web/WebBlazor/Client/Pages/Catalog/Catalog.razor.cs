@@ -14,25 +14,27 @@ namespace WebBlazor.Client.Pages.Catalog
     public partial class Catalog
     {
         private bool errorReceived;
-        private List<BrandDTO> brands = new List<BrandDTO>();
+        private List<BrandDTO> brands = new();
         private int? brandSelected;
-        private List<TypeDTO> types = new List<TypeDTO>();
+        private List<TypeDTO> types = new();
         private int? typeSelected;
         private CatalogDTO catalog;
-        private PagerInfo paginationInfo = new PagerInfo();
+        private PagerInfo paginationInfo = new();
         private bool authenticated;
         private string userId;
         
         [Inject]
-        private ICatalogService catalogService { get; set; }
+        private ICatalogService CatalogService { get; set; }
+
         [Inject]
-        private IBasketService basketService { get; set; }
+        private IBasketService BasketService { get; set; }
+
         [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            var user = (await authenticationStateTask).User;
+            var user = (await AuthenticationStateTask).User;
             authenticated = user.Identity.IsAuthenticated;
             if (authenticated)
                 userId = user.GetSub();
@@ -41,10 +43,10 @@ namespace WebBlazor.Client.Pages.Catalog
 
         private async Task LoadData()
         {
-            var brandData = await catalogService.GetBrands();
+            var brandData = await CatalogService.GetBrands();
             brands = brandData.ToList();
             await GetCatalog(10, 0);
-            var typeData = await catalogService.GetTypes();
+            var typeData = await CatalogService.GetTypes();
             types = typeData.ToList();
         }
 
@@ -53,7 +55,7 @@ namespace WebBlazor.Client.Pages.Catalog
             errorReceived = false;
             try
             {
-                catalog = await catalogService.GetCatalogItems(pageIndex, pageSize, brand, type);
+                catalog = await CatalogService.GetCatalogItems(pageIndex, pageSize, brand, type);
                 paginationInfo.ActualPage = catalog.PageIndex;
                 paginationInfo.ItemsPage = catalog.PageSize;
                 paginationInfo.TotalItems = catalog.Count;
@@ -98,7 +100,7 @@ namespace WebBlazor.Client.Pages.Catalog
 
         private async Task AddToCart(CatalogItemDTO item)
         {
-            await basketService.AddItemToBasket(userId, item.Id);
+            await BasketService.AddItemToBasket(userId, item.Id);
         }
     }
 }

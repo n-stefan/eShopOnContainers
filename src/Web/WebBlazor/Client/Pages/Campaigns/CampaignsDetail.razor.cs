@@ -11,13 +11,15 @@ namespace WebBlazor.Client.Pages.Campaigns
     [Authorize]
     public partial class CampaignsDetail
     {
-        private CampaignItemDTO campaign = new CampaignItemDTO();
-        private List<HeaderInfo> header = new List<HeaderInfo> {
+        private CampaignItemDTO campaign = new();
+        private List<HeaderInfo> header = new()
+        {
             new HeaderInfo { Url = "/catalog", Text = "Back to catalog" },
             new HeaderInfo { Url = "/campaigns", Text = "Back to campaigns" } };
         
         [Inject]
-        private ICampaignService campaignService { get; set; }
+        private ICampaignService CampaignService { get; set; }
+
         [Parameter]
         public int Id { get; set; }
 
@@ -28,7 +30,7 @@ namespace WebBlazor.Client.Pages.Campaigns
 
         private async Task GetCampaign()
         {
-            campaign = await campaignService.GetCampaignById(Id);
+            campaign = await CampaignService.GetCampaignById(Id);
         }
     }
 }

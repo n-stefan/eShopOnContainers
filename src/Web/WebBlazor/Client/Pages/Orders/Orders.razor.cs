@@ -15,20 +15,22 @@ namespace WebBlazor.Client.Pages.Orders
     public partial class Orders
     {
         private bool errorReceived;
-        private List<OrderDTO> orders = new List<OrderDTO>();
-        private List<HeaderInfo> header = new List<HeaderInfo> {
+        private List<OrderDTO> orders = new();
+        private List<HeaderInfo> header = new()
+        {
             new HeaderInfo { Url = "/catalog", Text = "Back to catalog" },
             new HeaderInfo { Text = "/" },
             new HeaderInfo { Url = "/ordermanagement", Text = "Orders Management" } };
         
         [Inject]
-        private IOrderingService orderingService { get; set; }
+        private IOrderingService OrderingService { get; set; }
+
         [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            var userId = (await authenticationStateTask).User.GetSub();
+            var userId = (await AuthenticationStateTask).User.GetSub();
             await GetOrders(userId);
             //this.signalrService.msgReceived$
             //    .subscribe(x => this.getOrders());
@@ -38,7 +40,7 @@ namespace WebBlazor.Client.Pages.Orders
         {
             try
             {
-                orders = await orderingService.GetMyOrders(userId);
+                orders = await OrderingService.GetMyOrders(userId);
                 errorReceived = false;
             }
             catch (Exception)
@@ -50,7 +52,7 @@ namespace WebBlazor.Client.Pages.Orders
 
         private async Task CancelOrder(string orderNumber)
         {
-            await orderingService.CancelOrder(orderNumber);
+            await OrderingService.CancelOrder(orderNumber);
         }
     }
 }

@@ -14,23 +14,25 @@ namespace WebBlazor.Client.Pages.Basket
         private int badge;
         
         [Inject]
-        private IBasketService basketService { get; set; }
+        private IBasketService BasketService { get; set; }
+
         [Inject]
-        private IEventService eventService { get; set; }
+        private IEventService EventService { get; set; }
+
         [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            var userId = (await authenticationStateTask).User.GetSub();
+            var userId = (await AuthenticationStateTask).User.GetSub();
             await UpdateBadge(userId);
-            eventService.BasketItemAdded += UpdateBadge;
-            eventService.OrderCreated += ResetBadge;
+            EventService.BasketItemAdded += UpdateBadge;
+            EventService.OrderCreated += ResetBadge;
         }
 
         private async Task UpdateBadge(string userId)
         {
-            var basket = await basketService.GetBasket(userId);
+            var basket = await BasketService.GetBasket(userId);
             badge = basket.Items.Count;
             StateHasChanged();
         }
@@ -43,8 +45,8 @@ namespace WebBlazor.Client.Pages.Basket
 
         public void Dispose()
         {
-            eventService.BasketItemAdded -= UpdateBadge;
-            eventService.OrderCreated -= ResetBadge;
+            EventService.BasketItemAdded -= UpdateBadge;
+            EventService.OrderCreated -= ResetBadge;
         }
     }
 }

@@ -8,14 +8,15 @@ namespace WebBlazor.Client.Shared
     public partial class LoginDisplay
     {
         [Inject]
-        private NavigationManager navigation { get; set; }
+        private NavigationManager Navigation { get; set; }
+
         [Inject]
-        private SignOutSessionStateManager signOutManager { get; set; }
+        private SignOutSessionStateManager SignOutManager { get; set; }
 
         private async Task BeginSignOut(MouseEventArgs args)
         {
-            await signOutManager.SetSignOutState();
-            navigation.NavigateTo("authentication/logout");
+            await SignOutManager.SetSignOutState();
+            Navigation.NavigateTo("authentication/logout");
         }
     }
 }

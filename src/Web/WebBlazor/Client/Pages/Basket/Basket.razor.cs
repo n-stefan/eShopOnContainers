@@ -16,16 +16,18 @@ namespace WebBlazor.Client.Pages.Basket
     public partial class Basket
     {
         private bool errorUpdate;
-        private BasketDTO basket = new BasketDTO();
+        private BasketDTO basket = new();
         private string userId;
-        private List<HeaderInfo> header = new List<HeaderInfo> { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
+        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
         
         [Inject]
-        private IBasketService basketService { get; set; }
+        private IBasketService BasketService { get; set; }
+
         [Inject]
-        private NavigationManager navigation { get; set; }
+        private NavigationManager Navigation { get; set; }
+
         [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         private bool HasItemWithInvalidQuantity
         {
@@ -34,8 +36,8 @@ namespace WebBlazor.Client.Pages.Basket
 
         protected override async Task OnInitializedAsync()
         {
-            userId = (await authenticationStateTask).User.GetSub();
-            basket = await basketService.GetBasket(userId);
+            userId = (await AuthenticationStateTask).User.GetSub();
+            basket = await BasketService.GetBasket(userId);
         }
 
         private void ItemQuantityChanged(BasketItemDTO item, ChangeEventArgs e)
@@ -52,7 +54,7 @@ namespace WebBlazor.Client.Pages.Basket
             {
                 if (HasItemWithInvalidQuantity)
                     return;
-                await basketService.UpdateBasket(basket);
+                await BasketService.UpdateBasket(basket);
                 errorUpdate = false;
             }
             catch (Exception)
@@ -66,7 +68,7 @@ namespace WebBlazor.Client.Pages.Basket
             if (HasItemWithInvalidQuantity)
                 return;
             await Update();
-            navigation.NavigateTo("/ordersnew");
+            Navigation.NavigateTo("/ordersnew");
         }
     }
 }

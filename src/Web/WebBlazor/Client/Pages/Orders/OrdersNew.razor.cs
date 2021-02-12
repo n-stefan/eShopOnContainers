@@ -19,24 +19,26 @@ namespace WebBlazor.Client.Pages.Orders
     {
         private bool errorReceived;
         private bool isOrderProcessing;
-        private List<HeaderInfo> header = new List<HeaderInfo> { new HeaderInfo { Url = "/basket", Text = "Back to cart" } };
+        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "/basket", Text = "Back to cart" } };
         private OrderDTO order;
         private EditContext editContext;
         
         [Inject]
-        private IOrderingService orderingService { get; set; }
+        private IOrderingService OrderingService { get; set; }
+
         [Inject]
-        private IBasketService basketService { get; set; }
+        private IBasketService BasketService { get; set; }
+
         [Inject]
-        private NavigationManager navigation { get; set; }
+        private NavigationManager Navigation { get; set; }
+
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         private bool CantPlaceOrder
         {
             get => !editContext.Validate() || isOrderProcessing;
         }
-
-        [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
 
         public OrdersNew()
         {
@@ -46,9 +48,9 @@ namespace WebBlazor.Client.Pages.Orders
 
         protected override async Task OnInitializedAsync()
         {
-            var user = (await authenticationStateTask).User;
-            var orderDraft = await basketService.GetOrderDraft(user.GetSub());
-            order = orderingService.MapUserInfoIntoOrder(user, orderDraft);
+            var user = (await AuthenticationStateTask).User;
+            var orderDraft = await BasketService.GetOrderDraft(user.GetSub());
+            order = OrderingService.MapUserInfoIntoOrder(user, orderDraft);
             order.CardExpirationShortFormat();
             order.RequestId = Guid.NewGuid();
             editContext = new EditContext(order);
@@ -58,14 +60,14 @@ namespace WebBlazor.Client.Pages.Orders
         {
             if (!editContext.Validate())
                 return;
-            var basket = orderingService.MapOrderToBasket(order);
+            var basket = OrderingService.MapOrderToBasket(order);
             try
             {
-                await basketService.Checkout(basket);
+                await BasketService.Checkout(basket);
                 errorReceived = false;
                 isOrderProcessing = true;
                 await Task.Delay(1000);
-                navigation.NavigateTo("/orders");
+                Navigation.NavigateTo("/orders");
             }
             catch (Exception)
             {

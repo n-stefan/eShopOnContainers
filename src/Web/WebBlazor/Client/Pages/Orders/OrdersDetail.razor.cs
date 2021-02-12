@@ -13,25 +13,27 @@ namespace WebBlazor.Client.Pages.Orders
     [Authorize]
     public partial class OrdersDetail
     {
-        private OrderDTO order = new OrderDTO();
-        private List<HeaderInfo> header = new List<HeaderInfo> { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
+        private OrderDTO order = new();
+        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
         
         [Inject]
-        private IOrderingService orderingService { get; set; }
+        private IOrderingService OrderingService { get; set; }
+
         [Parameter]
         public int Id { get; set; }
+
         [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            var userId = (await authenticationStateTask).User.GetSub();
+            var userId = (await AuthenticationStateTask).User.GetSub();
             await GetOrder(userId);
         }
 
         private async Task GetOrder(string userId)
         {
-            order = await orderingService.GetOrder(userId, Id.ToString());
+            order = await OrderingService.GetOrder(userId, Id.ToString());
         }
     }
 }
