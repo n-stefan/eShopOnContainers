@@ -78,7 +78,7 @@ namespace WebBlazor.Client.Services
         {
             var uri = API.Order.CancelOrder(_remoteServiceBaseUrl);
 
-            var order = new { OrderNumber = int.Parse(orderId) };
+            var order = new OrderDTO { OrderNumber = orderId };
 
             var orderContent = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json");
 
@@ -101,6 +101,24 @@ namespace WebBlazor.Client.Services
             var response = JsonConvert.DeserializeObject<OrderDTO>(responseString);
 
             return response;
+        }
+
+        public async Task ShipOrder(string orderId)
+        {
+            var uri = API.Order.ShipOrder(_remoteServiceBaseUrl);
+
+            var order = new OrderDTO { OrderNumber = orderId };
+
+            var orderContent = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(uri, orderContent);
+
+            if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Error in ship order process, try later.");
+            }
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }

@@ -83,6 +83,9 @@ namespace WebBlazor.Client.Infrastructure
 
             public static string GetOrder(string baseUri, string orderId) =>
                 $"{baseUri}/{orderId}";
+
+            public static string ShipOrder(string baseUri) =>
+                $"{baseUri}/ship";
         }
     }
 }

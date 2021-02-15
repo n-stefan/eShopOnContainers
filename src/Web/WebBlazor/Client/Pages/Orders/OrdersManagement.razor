@@ -1,0 +1,35 @@
+﻿@page "/ordersmanagement"
+
+<div class="esh-orders">
+    <Header Model="header" />
+
+    <div class="container">
+        <article class="esh-orders-titles row">
+            <section class="esh-orders-title col-2">Order number</section>
+            <section class="esh-orders-title col-4">Date</section>
+            <section class="esh-orders-title col-2">Total</section>
+            <section class="esh-orders-title col-2">Status</section>
+            <section class="esh-orders-title col-2"></section>
+        </article>
+
+        @foreach (var item in orders)
+        {
+            <article class="esh-orders-items row">
+                <section class="esh-orders-item col-2">@item.OrderNumber</section>
+                <section class="esh-orders-item col-4">@item.Date.ToString("MM/dd/yyyy HH:mm:ss")</section>
+                <section class="esh-orders-item col-2">$ @item.Total.ToString("N2")</section>
+                <section class="esh-orders-item col-2">@item.Status</section>
+                <section class="esh-orders-item col-2">
+                    <select @onchange="e => OrderProcess(item.OrderNumber, e)" disabled=@(item.Status != "paid")>
+                        <option value="">&nbsp;&nbsp;Select Action</option>
+                        <option value="">------------------</option>
+                        @foreach (var option in item.ActionCodeSelectList)
+                        {
+                            <option value="@option.Code">@option.Name</option>
+                        }
+                    </select>
+                </section>
+            </article>
+        }
+    </div>
+</div>

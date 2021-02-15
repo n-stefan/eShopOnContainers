@@ -1,0 +1,40 @@
+﻿.esh-orders {
+    min-height: 80vh;
+    overflow-x: hidden;
+}
+
+.esh-orders-titles {
+    padding-bottom: 1rem;
+    padding-top: 2rem;
+}
+
+.esh-orders-title {
+    text-transform: uppercase;
+}
+
+.esh-orders-items {
+    height: 2rem;
+    line-height: 2rem;
+    position: relative;
+}
+
+    .esh-orders-items:nth-of-type(2n + 1):before {
+        background-color: #EEEEFF;
+        content: '';
+        height: 100%;
+        left: 0;
+        margin-left: -100vw;
+        position: absolute;
+        top: 0;
+        width: 200vw;
+        z-index: -1;
+    }
+
+    .esh-orders-items:hover {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+.esh-orders-item {
+    font-weight: 300;
+}

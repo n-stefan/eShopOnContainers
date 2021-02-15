@@ -16,5 +16,7 @@ namespace WebBlazor.Client.Services
         Task CancelOrder(string orderId);
 
         Task<OrderDTO> GetOrder(string userId, string orderId);
+
+        Task ShipOrder(string orderId);
     }
 }

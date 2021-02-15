@@ -68,5 +68,20 @@ namespace WebBlazor.Client.Services.ModelDTOs
 
             CardExpiration = new DateTime(int.Parse(year), int.Parse(month), 1);
         }
+
+        public List<OrderProcessActionDTO> ActionCodeSelectList =>
+           GetActionCodesByCurrentState();
+
+        private List<OrderProcessActionDTO> GetActionCodesByCurrentState()
+        {
+            var actions = new List<OrderProcessActionDTO>();
+            switch (Status?.ToLower())
+            {
+                case "paid":
+                    actions.Add(OrderProcessActionDTO.Ship);
+                    break;
+            }
+            return actions;
+        }
     }
 }

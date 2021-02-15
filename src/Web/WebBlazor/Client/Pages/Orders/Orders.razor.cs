@@ -20,7 +20,8 @@ namespace WebBlazor.Client.Pages.Orders
         {
             new HeaderInfo { Url = "/catalog", Text = "Back to catalog" },
             new HeaderInfo { Text = "/" },
-            new HeaderInfo { Url = "/ordermanagement", Text = "Orders Management" } };
+            new HeaderInfo { Url = "/ordersmanagement", Text = "Orders Management" }
+        };
         
         [Inject]
         private IOrderingService OrderingService { get; set; }

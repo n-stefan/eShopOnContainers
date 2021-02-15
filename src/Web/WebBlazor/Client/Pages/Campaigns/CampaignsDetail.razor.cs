@@ -15,7 +15,8 @@ namespace WebBlazor.Client.Pages.Campaigns
         private List<HeaderInfo> header = new()
         {
             new HeaderInfo { Url = "/catalog", Text = "Back to catalog" },
-            new HeaderInfo { Url = "/campaigns", Text = "Back to campaigns" } };
+            new HeaderInfo { Url = "/campaigns", Text = "Back to campaigns" }
+        };
         
         [Inject]
         private ICampaignService CampaignService { get; set; }
