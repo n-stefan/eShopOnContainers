@@ -25,6 +25,7 @@ namespace WebBlazor.Client
             {
                 ["PurchaseUrl"] = appSettings.PurchaseUrl,
                 ["MarketingUrl"] = appSettings.MarketingUrl,
+                ["SignalrHubUrl"] = appSettings.SignalrHubUrl,
                 ["ActivateCampaignDetailFunction"] = appSettings.ActivateCampaignDetailFunction
             });
 

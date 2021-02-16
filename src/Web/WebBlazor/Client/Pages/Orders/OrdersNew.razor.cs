@@ -66,7 +66,6 @@ namespace WebBlazor.Client.Pages.Orders
                 await BasketService.Checkout(basket);
                 errorReceived = false;
                 isOrderProcessing = true;
-                await Task.Delay(1000);
                 Navigation.NavigateTo("/orders");
             }
             catch (Exception)
