@@ -18,7 +18,7 @@ namespace WebBlazor.Client.Pages.Basket
         private bool errorUpdate;
         private BasketDTO basket = new();
         private string userId;
-        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
+        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "catalog", Text = "Back to catalog" } };
         
         [Inject]
         private IBasketService BasketService { get; set; }
@@ -68,7 +68,7 @@ namespace WebBlazor.Client.Pages.Basket
             if (HasItemWithInvalidQuantity)
                 return;
             await Update();
-            Navigation.NavigateTo("/ordersnew");
+            Navigation.NavigateTo("ordersnew");
         }
     }
 }

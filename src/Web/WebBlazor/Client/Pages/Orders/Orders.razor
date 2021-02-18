@@ -21,7 +21,7 @@
                 <section class="esh-orders-item col-2">$ @order.Total.ToString("N2")</section>
                 <section class="esh-orders-item col-2">@order.Status</section>
                 <section class="esh-orders-item col-1">
-                    <a class="esh-orders-link" href="/orders/@order.OrderNumber">Detail</a>
+                    <a class="esh-orders-link" href="orders/@order.OrderNumber">Detail</a>
                 </section>
                 <section class="esh-orders-item col-1">
                     @if (order.Status.ToLower() == "submitted")

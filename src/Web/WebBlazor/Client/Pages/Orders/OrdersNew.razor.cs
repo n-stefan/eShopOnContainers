@@ -19,7 +19,7 @@ namespace WebBlazor.Client.Pages.Orders
     {
         private bool errorReceived;
         private bool isOrderProcessing;
-        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "/basket", Text = "Back to cart" } };
+        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "basket", Text = "Back to cart" } };
         private OrderDTO order;
         private EditContext editContext;
         
@@ -66,7 +66,8 @@ namespace WebBlazor.Client.Pages.Orders
                 await BasketService.Checkout(basket);
                 errorReceived = false;
                 isOrderProcessing = true;
-                Navigation.NavigateTo("/orders");
+                await Task.Delay(500);
+                Navigation.NavigateTo("orders");
             }
             catch (Exception)
             {

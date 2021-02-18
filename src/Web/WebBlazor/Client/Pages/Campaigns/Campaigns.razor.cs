@@ -19,7 +19,7 @@ namespace WebBlazor.Client.Pages.Campaigns
         private CampaignDTO campaigns;
         private LocationDTO location = new();
         private PagerInfo paginationInfo = new();
-        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "/catalog", Text = "Back to catalog" } };
+        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "catalog", Text = "Back to catalog" } };
         
         [Inject]
         private ICampaignService CampaignService { get; set; }
@@ -76,7 +76,7 @@ namespace WebBlazor.Client.Pages.Campaigns
         private void OnNavigateToDetails(int id)
         {
             if (id > 0)
-                Navigation.NavigateTo($"/campaigns/{id}");
+                Navigation.NavigateTo($"campaigns/{id}");
         }
 
         private async Task UpdateUserLocation()
