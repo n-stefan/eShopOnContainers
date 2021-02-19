@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -37,6 +38,9 @@ namespace WebBlazor.Client.Pages.Orders
         [Inject]
         private IAccessTokenProvider TokenProvider { get; set; }
 
+        [Inject]
+        private IJSRuntime JsRuntime { get; set; }
+
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -64,10 +68,11 @@ namespace WebBlazor.Client.Pages.Orders
                 })
                 .WithAutomaticReconnect()
                 .Build();
-            hubConnection.On<HubMessage>("UpdatedOrderState", async _ =>
+            hubConnection.On<HubMessage>("UpdatedOrderState", async message =>
             {
                 await GetOrders();
                 StateHasChanged();
+                await JsRuntime.InvokeVoidAsync("showToastrNotification", message.Status, message.OrderId);
             });
             await hubConnection.StartAsync();
         }
