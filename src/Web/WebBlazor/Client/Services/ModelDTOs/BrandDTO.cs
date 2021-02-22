@@ -1,12 +1,12 @@
 ﻿
 namespace WebBlazor.Client.Services.ModelDTOs
 {
-    public class BrandDTO
+    public record BrandDTO
     {
-        public int? Id { get; set; }
+        public int? Id { get; init; }
 
-        public string Brand { get; set; }
+        public string Brand { get; init; }
 
-        public bool Selected { get; set; }
+        public bool Selected { get; init; }
     }
 }

@@ -1,12 +1,12 @@
 ﻿
 namespace WebBlazor.Client.Services.ModelDTOs
 {
-    public class TypeDTO
+    public record TypeDTO
     {
-        public int? Id { get; set; }
+        public int? Id { get; init; }
 
-        public string Type { get; set; }
+        public string Type { get; init; }
 
-        public bool Selected { get; set; }
+        public bool Selected { get; init; }
     }
 }

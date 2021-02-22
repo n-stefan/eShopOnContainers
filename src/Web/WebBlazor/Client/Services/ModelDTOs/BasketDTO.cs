@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace WebBlazor.Client.Services.ModelDTOs
 {
-    public class BasketDTO
+    public record BasketDTO
     {
-        public List<BasketItemDTO> Items { get; set; } = new List<BasketItemDTO>();
+        public List<BasketItemDTO> Items { get; init; } = new List<BasketItemDTO>();
 
-        public string BuyerId { get; set; }
+        public string BuyerId { get; init; }
 
         public decimal Total() =>
             Math.Round(Items.Sum(x => x.UnitPrice * x.Quantity), 2);

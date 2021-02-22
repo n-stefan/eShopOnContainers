@@ -1,10 +1,10 @@
 ﻿
 namespace WebBlazor.Client.Shared.Models
 {
-    public class HeaderInfo
+    public record HeaderInfo
     {
-        public string Url { get; set; }
+        public string Url { get; init; }
 
-        public string Text { get; set; }
+        public string Text { get; init; }
     }
 }

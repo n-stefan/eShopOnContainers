@@ -2,14 +2,14 @@
 
 namespace WebBlazor.Client.Services.ModelDTOs
 {
-    public class CatalogDTO
+    public record CatalogDTO
     {
-        public int PageIndex { get; set; }
+        public int PageIndex { get; init; }
 
-        public int PageSize { get; set; }
+        public int PageSize { get; init; }
 
-        public int Count { get; set; }
+        public int Count { get; init; }
 
-        public List<CatalogItemDTO> Data { get; set; }
+        public List<CatalogItemDTO> Data { get; init; }
     }
 }

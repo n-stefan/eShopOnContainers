@@ -1,24 +1,24 @@
 ﻿
 namespace WebBlazor.Client.Services.ModelDTOs
 {
-    public class CatalogItemDTO
+    public record CatalogItemDTO
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
 
-        public string Name { get; set; }
+        public string Name { get; init; }
 
-        public string Description { get; set; }
+        public string Description { get; init; }
 
-        public decimal Price { get; set; }
+        public decimal Price { get; init; }
 
-        public string PictureUri { get; set; }
+        public string PictureUri { get; init; }
 
-        public int CatalogBrandId { get; set; }
+        public int CatalogBrandId { get; init; }
 
-        public string CatalogBrand { get; set; }
+        public string CatalogBrand { get; init; }
 
-        public int CatalogTypeId { get; set; }
+        public int CatalogTypeId { get; init; }
 
-        public string CatalogType { get; set; }
+        public string CatalogType { get; init; }
     }
 }
