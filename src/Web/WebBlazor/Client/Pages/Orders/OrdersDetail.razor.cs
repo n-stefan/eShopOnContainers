@@ -14,7 +14,7 @@ namespace WebBlazor.Client.Pages.Orders
     public partial class OrdersDetail
     {
         private OrderDTO order = new();
-        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "catalog", Text = "Back to catalog" } };
+        private readonly List<HeaderInfo> header = new() { new HeaderInfo { Url = "catalog", Text = "Back to catalog" } };
         
         [Inject]
         private IOrderingService OrderingService { get; set; }

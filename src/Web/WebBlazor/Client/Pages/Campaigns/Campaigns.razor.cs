@@ -17,9 +17,9 @@ namespace WebBlazor.Client.Pages.Campaigns
         private bool errorReceived;
         private bool isCampaignDetailFunctionEnabled;
         private CampaignDTO campaigns;
-        private LocationDTO location = new();
-        private PagerInfo paginationInfo = new();
-        private List<HeaderInfo> header = new() { new HeaderInfo { Url = "catalog", Text = "Back to catalog" } };
+        private readonly LocationDTO location = new();
+        private readonly PagerInfo paginationInfo = new();
+        private readonly List<HeaderInfo> header = new() { new HeaderInfo { Url = "catalog", Text = "Back to catalog" } };
         
         [Inject]
         private ICampaignService CampaignService { get; set; }

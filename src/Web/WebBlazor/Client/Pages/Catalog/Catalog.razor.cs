@@ -19,7 +19,7 @@ namespace WebBlazor.Client.Pages.Catalog
         private List<TypeDTO> types = new();
         private int? typeSelected;
         private CatalogDTO catalog;
-        private PagerInfo paginationInfo = new();
+        private readonly PagerInfo paginationInfo = new();
         private bool authenticated;
         private string userId;
         

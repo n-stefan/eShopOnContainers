@@ -22,7 +22,7 @@ namespace WebBlazor.Client.Pages.Orders
         private string userId;
         private HubConnection hubConnection;
         private List<OrderDTO> orders = new();
-        private List<HeaderInfo> header = new()
+        private readonly List<HeaderInfo> header = new()
         {
             new HeaderInfo { Url = "catalog", Text = "Back to catalog" },
             new HeaderInfo { Text = "/" },
