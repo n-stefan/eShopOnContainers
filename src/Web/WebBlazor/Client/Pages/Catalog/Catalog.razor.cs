@@ -89,7 +89,8 @@ namespace WebBlazor.Client.Pages.Catalog
 
         private async Task OnFilterApplied()
         {
-            await GetCatalog(paginationInfo.ItemsPage, 0/*paginationInfo.ActualPage*/, brandSelected, typeSelected);
+            paginationInfo.ActualPage = 0;
+            await GetCatalog(paginationInfo.ItemsPage, paginationInfo.ActualPage, brandSelected, typeSelected);
         }
 
         private async Task OnPageChanged(int value)

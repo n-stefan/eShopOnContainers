@@ -19,8 +19,6 @@ namespace WebBlazor.Client.Shared
         {
             if (Model != null)
             {
-                //Model.Items = (Model.ItemsPage > Model.Items) ? Model.Items : Model.ItemsPage;
-
                 previousDisabled = (Model.ActualPage == 0);
                 nextDisabled = (Model.ActualPage + 1 >= Model.TotalPages);
             }

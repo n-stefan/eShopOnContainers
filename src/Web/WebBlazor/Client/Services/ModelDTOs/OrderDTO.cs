@@ -72,16 +72,9 @@ namespace WebBlazor.Client.Services.ModelDTOs
         public List<OrderProcessActionDTO> ActionCodeSelectList =>
            GetActionCodesByCurrentState();
 
-        private List<OrderProcessActionDTO> GetActionCodesByCurrentState()
-        {
-            var actions = new List<OrderProcessActionDTO>();
-            switch (Status?.ToLower())
-            {
-                case "paid":
-                    actions.Add(OrderProcessActionDTO.Ship);
-                    break;
-            }
-            return actions;
-        }
+        private List<OrderProcessActionDTO> GetActionCodesByCurrentState() =>
+            (Status?.ToLower() == "paid") ?
+                new() { OrderProcessActionDTO.Ship } :
+                new();
     }
 }
