@@ -15,28 +15,28 @@
                     <div class="form-group"> @*@ErrorClass(() => order.Street)*@
                         <label class="esh-orders_new-title">Address</label>
                         <InputText class="form-control form-input" placeholder="Street" @bind-Value="order.Street" />
-                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.Street)" /></div>
+                        <div class="alert alert-danger"><ValidationMessage For="() => order.Street" /></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group"> @*@ErrorClass(() => order.City)*@
                         <label class="esh-orders_new-title">City</label>
                         <InputText class="form-control form-input" placeholder="City" @bind-Value="order.City" />
-                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.City)" /></div>
+                        <div class="alert alert-danger"><ValidationMessage For="() => order.City" /></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group"> @*@ErrorClass(() => order.State)*@
                         <label class="esh-orders_new-title">State</label>
                         <InputText class="form-control form-input" placeholder="State" @bind-Value="order.State" />
-                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.State)" /></div>
+                        <div class="alert alert-danger"><ValidationMessage For="() => order.State" /></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group"> @*@ErrorClass(() => order.Country)*@
                         <label class="esh-orders_new-title">Country</label>
                         <InputText class="form-control form-input" placeholder="Country" @bind-Value="order.Country" />
-                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.Country)" /></div>
+                        <div class="alert alert-danger"><ValidationMessage For="() => order.Country" /></div>
                     </div>
                 </div>
             </div>
@@ -48,28 +48,28 @@
                     <div class="form-group"> @*@ErrorClass(() => order.CardNumber)*@
                         <label class="esh-orders_new-title">Card number</label>
                         <InputText class="form-control form-input" placeholder="000000000000000" @bind-Value="order.CardNumber" />
-                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.CardNumber)" /></div>
+                        <div class="alert alert-danger"><ValidationMessage For="() => order.CardNumber" /></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group"> @*@ErrorClass(() => order.CardHolderName)*@
                         <label class="esh-orders_new-title">Cardholder name</label>
                         <InputText class="form-control form-input" placeholder="Card holder" @bind-Value="order.CardHolderName" />
-                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.CardHolderName)" /></div>
+                        <div class="alert alert-danger"><ValidationMessage For="() => order.CardHolderName" /></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group"> @*@ErrorClass(() => order.CardExpirationShort)*@
                         <label class="esh-orders_new-title">Expiration date</label>
                         <InputText class="form-control form-input form-input-medium" placeholder="MM/YY" @bind-Value="order.CardExpirationShort" />
-                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.CardExpirationShort)" /></div>
+                        <div class="alert alert-danger"><ValidationMessage For="() => order.CardExpirationShort" /></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group"> @*@ErrorClass(() => order.CardSecurityNumber)*@
                         <label class="esh-orders_new-title">Security code</label>
                         <InputText class="form-control form-input form-input-small" placeholder="000" @bind-Value="order.CardSecurityNumber" />
-                        <div class="alert alert-danger"><ValidationMessage For="@(() => order.CardSecurityNumber)" /></div>
+                        <div class="alert alert-danger"><ValidationMessage For="() => order.CardSecurityNumber" /></div>
                     </div>
                 </div>
             </div>
