@@ -1,10 +1,10 @@
 ﻿
 namespace WebBlazor.Client.Pages.Orders
 {
-    public class HubMessage
+    public record HubMessage
     {
-        public int OrderId { get; set; }
+        public int OrderId { get; init; }
 
-        public string Status { get; set; }
+        public string Status { get; init; }
     }
 }
