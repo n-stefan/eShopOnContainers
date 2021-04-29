@@ -38,13 +38,15 @@ Web MVC :  http://host.docker.internal:5100/
 Web SPA :  http://host.docker.internal:5104/
 ```
 
-This fork adds a Blazor WebAssembly web client, available at :
+### Blazor WebAssembly web client
+
+This fork adds a Blazor WebAssembly web client, available at:
 
 ```
 Web SPA - Blazor : http://host.docker.internal:5106
 ```
 
-Or when deployed to local Kubernetes, at :
+Or when deployed to local Kubernetes, at:
 
 ```
 Web SPA - Blazor : http://localhost/webblazor
