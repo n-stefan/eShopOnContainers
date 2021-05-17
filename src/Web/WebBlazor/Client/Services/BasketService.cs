@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WebBlazor.Client.Infrastructure;
 using WebBlazor.Client.Services.ModelDTOs;
@@ -42,7 +42,7 @@ namespace WebBlazor.Client.Services
             
             return string.IsNullOrEmpty(responseString) ?
                 new BasketDTO { BuyerId = userId } :
-                JsonConvert.DeserializeObject<BasketDTO>(responseString);
+                JsonSerializer.Deserialize<BasketDTO>(responseString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
         public async Task AddItemToBasket(string userId, int productId)
@@ -56,7 +56,7 @@ namespace WebBlazor.Client.Services
                 Quantity = 1
             };
 
-            var basketContent = new StringContent(JsonConvert.SerializeObject(newItem), Encoding.UTF8, "application/json");
+            var basketContent = new StringContent(JsonSerializer.Serialize(newItem), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(uri, basketContent);
 
@@ -80,22 +80,22 @@ namespace WebBlazor.Client.Services
                 }).ToArray()
             };
 
-            var basketContent = new StringContent(JsonConvert.SerializeObject(basketUpdate), Encoding.UTF8, "application/json");
+            var basketContent = new StringContent(JsonSerializer.Serialize(basketUpdate), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync(uri, basketContent);
 
             response.EnsureSuccessStatusCode();
 
-            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var responseString = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<BasketDTO>(jsonResponse);
+            return JsonSerializer.Deserialize<BasketDTO>(responseString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
         public async Task<BasketDTO> UpdateBasket(BasketDTO basket)
         {
             var uri = API.Basket.UpdateBasket(_basketByPassUrl);
 
-            var basketContent = new StringContent(JsonConvert.SerializeObject(basket), Encoding.UTF8, "application/json");
+            var basketContent = new StringContent(JsonSerializer.Serialize(basket), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(uri, basketContent);
 
@@ -110,7 +110,7 @@ namespace WebBlazor.Client.Services
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var response = JsonConvert.DeserializeObject<OrderDTO>(responseString);
+            var response = JsonSerializer.Deserialize<OrderDTO>(responseString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             return response;
         }
@@ -119,7 +119,7 @@ namespace WebBlazor.Client.Services
         {
             var uri = API.Basket.CheckoutBasket(_basketByPassUrl);
 
-            var basketContent = new StringContent(JsonConvert.SerializeObject(basket), Encoding.UTF8, "application/json");
+            var basketContent = new StringContent(JsonSerializer.Serialize(basket), Encoding.UTF8, "application/json");
 
             _logger.LogInformation("Uri checkout {uri}", uri);
 

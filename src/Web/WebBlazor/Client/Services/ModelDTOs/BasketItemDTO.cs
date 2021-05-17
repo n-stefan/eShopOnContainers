@@ -5,7 +5,7 @@ namespace WebBlazor.Client.Services.ModelDTOs
     {
         public string Id { get; init; }
 
-        public string ProductId { get; init; }
+        public int ProductId { get; init; }
 
         public string ProductName { get; init; }
 

@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WebBlazor.Client.Extensions;
 using WebBlazor.Client.Infrastructure;
@@ -69,7 +69,7 @@ namespace WebBlazor.Client.Services
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var response = JsonConvert.DeserializeObject<List<OrderDTO>>(responseString);
+            var response = JsonSerializer.Deserialize<List<OrderDTO>>(responseString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             return response;
         }
@@ -80,7 +80,7 @@ namespace WebBlazor.Client.Services
 
             var order = new OrderDTO { OrderNumber = orderId };
 
-            var orderContent = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json");
+            var orderContent = new StringContent(JsonSerializer.Serialize(order), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync(uri, orderContent);
 
@@ -98,7 +98,7 @@ namespace WebBlazor.Client.Services
             
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            var response = JsonConvert.DeserializeObject<OrderDTO>(responseString);
+            var response = JsonSerializer.Deserialize<OrderDTO>(responseString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             return response;
         }
@@ -109,7 +109,7 @@ namespace WebBlazor.Client.Services
 
             var order = new OrderDTO { OrderNumber = orderId };
 
-            var orderContent = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json");
+            var orderContent = new StringContent(JsonSerializer.Serialize(order), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PutAsync(uri, orderContent);
 

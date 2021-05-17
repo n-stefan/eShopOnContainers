@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using WebBlazor.Client.Services.ModelDTOs.Annotations;
+using WebBlazor.Client.Services.ModelDTOs.Converters;
 
 namespace WebBlazor.Client.Services.ModelDTOs
 {
     public class OrderDTO
     {
+        [JsonConverter(typeof(NumberToStringConverter))]
         public string OrderNumber { get; set; }
 
         public DateTime Date { get; set; }
@@ -52,7 +55,7 @@ namespace WebBlazor.Client.Services.ModelDTOs
 
         public string Buyer { get; set; }
 
-        public List<OrderItemDTO> OrderItems { get; } = new List<OrderItemDTO>();
+        public List<OrderItemDTO> OrderItems { get; set; } = new();
 
         [Required]
         public Guid RequestId { get; set; }

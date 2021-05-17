@@ -6,7 +6,7 @@ namespace WebBlazor.Client.Services.ModelDTOs
 {
     public record BasketDTO
     {
-        public List<BasketItemDTO> Items { get; init; } = new List<BasketItemDTO>();
+        public List<BasketItemDTO> Items { get; init; } = new();
 
         public string BuyerId { get; init; }
 
