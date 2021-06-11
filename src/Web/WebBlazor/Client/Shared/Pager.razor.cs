@@ -24,14 +24,10 @@ namespace WebBlazor.Client.Shared
             }
         }
 
-        private async Task OnPreviousClicked()
-        {
+        private async Task OnPreviousClicked() =>
             await Changed.InvokeAsync(Model.ActualPage - 1);
-        }
 
-        private async Task OnNextClicked()
-        {
+        private async Task OnNextClicked() =>
             await Changed.InvokeAsync(Model.ActualPage + 1);
-        }
     }
 }

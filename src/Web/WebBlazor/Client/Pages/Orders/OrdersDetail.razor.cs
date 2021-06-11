@@ -31,9 +31,7 @@ namespace WebBlazor.Client.Pages.Orders
             await GetOrder(userId);
         }
 
-        private async Task GetOrder(string userId)
-        {
+        private async Task GetOrder(string userId) =>
             order = await OrderingService.GetOrder(userId, Id.ToString());
-        }
     }
 }

@@ -24,14 +24,10 @@ namespace WebBlazor.Client.Pages.Campaigns
         [Parameter]
         public int Id { get; set; }
 
-        protected override async Task OnInitializedAsync()
-        {
+        protected override async Task OnInitializedAsync() =>
             await GetCampaign();
-        }
 
-        private async Task GetCampaign()
-        {
+        private async Task GetCampaign() =>
             campaign = await CampaignService.GetCampaignById(Id);
-        }
     }
 }

@@ -91,14 +91,10 @@ namespace WebBlazor.Client.Pages.Orders
             }
         }
 
-        private async Task CancelOrder(string orderNumber)
-        {
+        private async Task CancelOrder(string orderNumber) =>
             await OrderingService.CancelOrder(orderNumber);
-        }
 
-        public async ValueTask DisposeAsync()
-        {
+        public async ValueTask DisposeAsync() =>
             await hubConnection.DisposeAsync();
-        }
     }
 }

@@ -29,10 +29,8 @@ namespace WebBlazor.Client.Pages.Orders
             await LoadData();
         }
 
-        private async Task LoadData()
-        {
+        private async Task LoadData() =>
             orders = await OrderingService.GetMyOrders(userId);
-        }
 
         private async Task OrderProcess(string orderId, ChangeEventArgs e)
         {

@@ -23,9 +23,7 @@ namespace WebBlazor.Client.Services.ModelDTOs.Converters
             }
         }
 
-        public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options)
-        {
+        public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options) =>
             writer.WriteStringValue(value);
-        }
     }
 }

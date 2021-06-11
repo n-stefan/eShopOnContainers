@@ -77,9 +77,7 @@ namespace WebBlazor.Client.Pages.Orders
             }
         }
 
-        private string ErrorClass(Expression<Func<object>> field)
-        {
-            return editContext.GetValidationMessages(field).Any() ? "border border-danger" : string.Empty;
-        }
+        private string ErrorClass(Expression<Func<object>> field) =>
+            editContext.GetValidationMessages(field).Any() ? "border border-danger" : string.Empty;
     }
 }

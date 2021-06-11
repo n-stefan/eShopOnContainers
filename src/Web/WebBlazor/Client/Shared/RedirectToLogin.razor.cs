@@ -8,9 +8,7 @@ namespace WebBlazor.Client.Shared
         [Inject]
         private NavigationManager Navigation { get; set; }
 
-        protected override void OnInitialized()
-        {
+        protected override void OnInitialized() =>
             Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
-        }
     }
 }

@@ -99,9 +99,7 @@ namespace WebBlazor.Client.Pages.Catalog
             await GetCatalog(paginationInfo.ItemsPage, value);
         }
 
-        private async Task AddToCart(CatalogItemDTO item)
-        {
+        private async Task AddToCart(CatalogItemDTO item) =>
             await BasketService.AddItemToBasket(userId, item.Id);
-        }
     }
 }

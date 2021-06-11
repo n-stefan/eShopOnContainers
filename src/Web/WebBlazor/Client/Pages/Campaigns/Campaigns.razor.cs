@@ -79,9 +79,7 @@ namespace WebBlazor.Client.Pages.Campaigns
                 Navigation.NavigateTo($"campaigns/{id}");
         }
 
-        private async Task UpdateUserLocation()
-        {
+        private async Task UpdateUserLocation() =>
             await LocationService.CreateOrUpdateUserLocation(location);
-        }
     }
 }
