@@ -46,7 +46,7 @@ namespace WebBlazor.Client.Services
         {
             order.CardExpirationApiFormat();
 
-            return new BasketCheckoutDTO
+            return new()
             {
                 City = order.City,
                 Street = order.Street,

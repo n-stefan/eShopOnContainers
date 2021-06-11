@@ -19,7 +19,7 @@ namespace WebBlazor.Client.Pages.Orders
     {
         private bool errorReceived;
         private bool isOrderProcessing;
-        private readonly List<HeaderInfo> header = new() { new HeaderInfo { Url = "basket", Text = "Back to cart" } };
+        private readonly List<HeaderInfo> header = new() { new() { Url = "basket", Text = "Back to cart" } };
         private OrderDTO order;
         private EditContext editContext;
         

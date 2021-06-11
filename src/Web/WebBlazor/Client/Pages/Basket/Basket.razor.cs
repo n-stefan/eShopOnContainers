@@ -18,7 +18,7 @@ namespace WebBlazor.Client.Pages.Basket
         private bool errorUpdate;
         private BasketDTO basket = new();
         private string userId;
-        private readonly List<HeaderInfo> header = new() { new HeaderInfo { Url = "catalog", Text = "Back to catalog" } };
+        private readonly List<HeaderInfo> header = new() { new() { Url = "catalog", Text = "Back to catalog" } };
         
         [Inject]
         private IBasketService BasketService { get; set; }

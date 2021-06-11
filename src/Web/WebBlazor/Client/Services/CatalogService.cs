@@ -36,7 +36,7 @@ namespace WebBlazor.Client.Services
 
             var items = new List<BrandDTO>
             {
-                new BrandDTO { Id = null, Brand = "All", Selected = true }
+                new() { Id = null, Brand = "All", Selected = true }
             };
 
             items.AddRange(brands);
@@ -52,7 +52,7 @@ namespace WebBlazor.Client.Services
 
             var items = new List<TypeDTO>
             {
-                new TypeDTO { Id = null, Type = "All", Selected = true }
+                new() { Id = null, Type = "All", Selected = true }
             };
 
             items.AddRange(types);

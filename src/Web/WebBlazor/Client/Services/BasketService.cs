@@ -41,7 +41,7 @@ namespace WebBlazor.Client.Services
             var responseString = await response.Content.ReadAsStringAsync();
             
             return string.IsNullOrEmpty(responseString) ?
-                new BasketDTO { BuyerId = userId } :
+                new() { BuyerId = userId } :
                 JsonSerializer.Deserialize<BasketDTO>(responseString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 

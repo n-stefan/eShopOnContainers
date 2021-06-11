@@ -14,8 +14,8 @@ namespace WebBlazor.Client.Pages.Campaigns
         private CampaignItemDTO campaign = new();
         private readonly List<HeaderInfo> header = new()
         {
-            new HeaderInfo { Url = "catalog", Text = "Back to catalog" },
-            new HeaderInfo { Url = "campaigns", Text = "Back to campaigns" }
+            new() { Url = "catalog", Text = "Back to catalog" },
+            new() { Url = "campaigns", Text = "Back to campaigns" }
         };
         
         [Inject]

@@ -8,9 +8,9 @@ namespace WebBlazor.Client.Services.ModelDTOs.Annotations
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (!double.TryParse(value.ToString(), out double coordinate) || (coordinate < -180 || coordinate > 180))
+            if (!double.TryParse(value.ToString(), out var coordinate) || (coordinate < -180 || coordinate > 180))
             {
-                return new ValidationResult("Longitude must be between -180 and 180 degrees inclusive.", new[] { validationContext.MemberName });
+                return new("Longitude must be between -180 and 180 degrees inclusive.", new[] { validationContext.MemberName });
             }
 
             return ValidationResult.Success;

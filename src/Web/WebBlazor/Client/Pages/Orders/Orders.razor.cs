@@ -24,9 +24,9 @@ namespace WebBlazor.Client.Pages.Orders
         private List<OrderDTO> orders = new();
         private readonly List<HeaderInfo> header = new()
         {
-            new HeaderInfo { Url = "catalog", Text = "Back to catalog" },
-            new HeaderInfo { Text = "/" },
-            new HeaderInfo { Url = "ordersmanagement", Text = "Orders Management" }
+            new() { Url = "catalog", Text = "Back to catalog" },
+            new() { Text = "/" },
+            new() { Url = "ordersmanagement", Text = "Orders Management" }
         };
         
         [Inject]
