@@ -7,11 +7,9 @@ namespace WebBlazor.Client.Infrastructure
     public class HttpClientAuthorizationMessageHandler : AuthorizationMessageHandler
     {
         public HttpClientAuthorizationMessageHandler(IAccessTokenProvider provider, NavigationManager navigationManager, IConfiguration configuration)
-            : base(provider, navigationManager)
-        {
-            ConfigureHandler(
-                authorizedUrls: new[] { configuration["PurchaseUrl"] },
-                scopes: new[] { "basket", "orders" });
-        }
+            : base(provider, navigationManager) =>
+                ConfigureHandler(
+                    authorizedUrls: new[] { configuration["PurchaseUrl"] },
+                    scopes: new[] { "basket", "orders" });
     }
 }

@@ -29,10 +29,8 @@ namespace WebBlazor.Client.Pages.Basket
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-        private bool HasItemWithInvalidQuantity
-        {
-            get => basket.Items.Any(x => x.Quantity < 1);
-        }
+        private bool HasItemWithInvalidQuantity =>
+            basket.Items.Any(x => x.Quantity < 1);
 
         protected override async Task OnInitializedAsync()
         {

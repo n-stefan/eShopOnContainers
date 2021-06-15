@@ -35,10 +35,8 @@ namespace WebBlazor.Client.Pages.Orders
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-        private bool CantPlaceOrder
-        {
-            get => !editContext.Validate() || isOrderProcessing;
-        }
+        private bool CantPlaceOrder =>
+            !editContext.Validate() || isOrderProcessing;
 
         public OrdersNew()
         {

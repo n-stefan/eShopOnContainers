@@ -13,9 +13,7 @@ IWebHost BuildWebHost(string[] args) =>
      .UseStartup<Startup>()
         .UseContentRoot(Directory.GetCurrentDirectory())
         .ConfigureAppConfiguration((builderContext, config) =>
-        {
-            config.AddEnvironmentVariables();
-        })
+            config.AddEnvironmentVariables())
         .ConfigureLogging((hostingContext, builder) =>
         {
             builder.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
@@ -24,10 +22,8 @@ IWebHost BuildWebHost(string[] args) =>
             builder.AddAzureWebAppDiagnostics();
         })
         .UseSerilog((builderContext, config) =>
-        {
             config
                 .MinimumLevel.Information()
                 .Enrich.FromLogContext()
-                .WriteTo.Console();
-        })
+                .WriteTo.Console())
         .Build();

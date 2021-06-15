@@ -18,10 +18,8 @@ namespace WebBlazor.Server
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
+        public Startup(IConfiguration configuration) =>
             Configuration = configuration;
-        }
 
         public IConfiguration Configuration { get; }
 
@@ -39,25 +37,21 @@ namespace WebBlazor.Server
 
             services.AddHealthChecks()
                 .AddCheck("self", () => HealthCheckResult.Healthy())
-                .AddUrlGroup(new Uri(Configuration["IdentityUrlHC"]), name: "identityapi-check", tags: new string[] { "identityapi" });
+                .AddUrlGroup(new Uri(Configuration["IdentityUrlHC"]), name: "identityapi-check", tags: new[] { "identityapi" });
 
             services.Configure<AppSettings>(Configuration);
 
             if (Configuration.GetValue<string>("IsClusterEnv") == bool.TrueString)
             {
                 services.AddDataProtection(opts =>
-                {
-                    opts.ApplicationDiscriminator = "eshop.webblazor";
-                })
+                    opts.ApplicationDiscriminator = "eshop.webblazor")
                 .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]), "DataProtection-Keys");
             }
 
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
             services.AddControllers()
                 .AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                });
+                    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
             services.AddRazorPages();
         }
 
@@ -83,7 +77,7 @@ namespace WebBlazor.Server
             //     if (string.Equals(context.Request.Path.Value, "/", StringComparison.OrdinalIgnoreCase))
             //     {
             //         var tokens = antiforgery.GetAndStoreTokens(context);
-            //         context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions() { HttpOnly = false });
+            //         context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions { HttpOnly = false });
             //     }
             //     await next.Invoke();
             // });
@@ -113,7 +107,7 @@ namespace WebBlazor.Server
                 {
                     Predicate = r => r.Name.Contains("self")
                 });
-                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions
                 {
                     Predicate = _ => true,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse

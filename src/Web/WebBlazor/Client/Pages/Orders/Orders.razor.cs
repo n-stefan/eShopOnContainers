@@ -63,9 +63,7 @@ namespace WebBlazor.Client.Pages.Orders
             }
             hubConnection = new HubConnectionBuilder()
                 .WithUrl($"{Configuration["SignalrHubUrl"]}/hub/notificationhub", options =>
-                {
-                    options.AccessTokenProvider = () => Task.FromResult(token.Value);
-                })
+                    options.AccessTokenProvider = () => Task.FromResult(token.Value))
                 .WithAutomaticReconnect()
                 .Build();
             hubConnection.On<HubMessage>("UpdatedOrderState", async message =>
