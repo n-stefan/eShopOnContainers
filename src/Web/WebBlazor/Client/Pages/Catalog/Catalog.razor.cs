@@ -45,7 +45,7 @@ namespace WebBlazor.Client.Pages.Catalog
         {
             var brandData = await CatalogService.GetBrands();
             brands = brandData.ToList();
-            await GetCatalog(10, 0);
+            await GetCatalog(9, 0);
             var typeData = await CatalogService.GetTypes();
             types = typeData.ToList();
         }
