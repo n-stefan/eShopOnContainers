@@ -42,13 +42,17 @@ namespace WebBlazor.Server.Infrastructure
                 }
 
                 string imagePath = Path.Combine(webroot, "assets", "images");
+                if (!Directory.Exists(imagePath))
+                {
+                    Directory.CreateDirectory(imagePath);
+                }
                 string[] imageFiles = Directory.GetFiles(imagePath).Select(file => Path.GetFileName(file)).ToArray();
 
                 using (ZipArchive zip = ZipFile.Open(imagesZipFile, ZipArchiveMode.Read))
                 {
                     foreach (ZipArchiveEntry entry in zip.Entries)
                     {
-                        if (imageFiles.Contains(entry.Name))
+                        if (!imageFiles.Contains(entry.Name))
                         {
                             string destinationFilename = Path.Combine(imagePath, entry.Name);
                             if (File.Exists(destinationFilename))

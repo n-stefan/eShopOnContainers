@@ -25,5 +25,7 @@ IWebHost BuildWebHost(string[] args) =>
             config
                 .MinimumLevel.Information()
                 .Enrich.FromLogContext()
+                .WriteTo.Seq("http://seq")
+                .ReadFrom.Configuration(builderContext.Configuration)
                 .WriteTo.Console())
         .Build();

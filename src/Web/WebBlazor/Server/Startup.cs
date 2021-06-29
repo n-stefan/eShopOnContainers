@@ -1,5 +1,4 @@
 using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -48,7 +47,6 @@ namespace WebBlazor.Server
                 .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]), "DataProtection-Keys");
             }
 
-            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
             services.AddControllers()
                 .AddJsonOptions(options =>
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
@@ -56,10 +54,8 @@ namespace WebBlazor.Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IAntiforgery antiforgery)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,18 +65,6 @@ namespace WebBlazor.Server
             {
                 app.UseExceptionHandler("/Error");
             }
-
-            // Configure XSRF middleware, This pattern is for SPA style applications where XSRF token is added on Index page 
-            // load and passed back token on every subsequent async request            
-            // app.Use(async (context, next) =>
-            // {
-            //     if (string.Equals(context.Request.Path.Value, "/", StringComparison.OrdinalIgnoreCase))
-            //     {
-            //         var tokens = antiforgery.GetAndStoreTokens(context);
-            //         context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions { HttpOnly = false });
-            //     }
-            //     await next.Invoke();
-            // });
 
             //Seed Data
             WebContextSeed.Seed(app, env, loggerFactory);
